@@ -26,54 +26,12 @@ public class DFA {
   }
 
   private void moveDFA(Character ch, TokenBuffer buffer) {
+    moveState(ch);
     if (state == DFAState.INITIAL) {
-      moveState(ch);
+      return;
     }
-    switch (state) {
-      case INT_1 -> {
-        if (ch == 'n') {
-          moveState(ch);
-        }
-        buffer.setType(state.tokenType());
-        buffer.append(ch);
-      }
-      case INT_2 -> {
-        if (ch == 't') {
-          buffer.append(ch);
-          moveState(ch);
-        }
-      }
-      case INT_3 -> moveState(ch);
-      case ID -> {
-        if (isAlpha(ch) || isDigit(ch)) {
-          buffer.setType(state.tokenType());
-          buffer.append(ch);
-          break;
-        }
-        moveState(ch);
-      }
-      case INT_LITERAL -> {
-        if (isDigit(ch)) {
-          buffer.setType(state.tokenType());
-          buffer.append(ch);
-          break;
-        }
-        moveState(ch);
-      }
-      case GT -> {
-        if (ch == '=') {
-          moveState(ch);
-          buffer.append(ch);
-        }
-        buffer.setType(state.tokenType());
-        buffer.append(ch);
-      }
-      case GE, ASSIGNMENT -> {
-        buffer.setType(state.tokenType());
-        buffer.append(ch);
-        moveState(ch);
-      }
-    }
+    buffer.setType(state.tokenType());
+    buffer.append(ch);
   }
 
   private void moveState(Character ch) {
