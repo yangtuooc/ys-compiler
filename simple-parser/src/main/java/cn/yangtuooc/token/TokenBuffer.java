@@ -1,6 +1,6 @@
 package cn.yangtuooc.token;
 
-public class TokenStatement {
+public class TokenBuffer {
 
   private TokenType type;
 

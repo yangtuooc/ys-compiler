@@ -1,5 +1,5 @@
 package cn.yangtuooc.token;
 
 public enum TokenType {
-  ASSIGNMENT, ID
+  ASSIGNMENT, INT_LITERAL, GT, GE, UNKNOWN, ID
 }

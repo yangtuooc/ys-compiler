@@ -13,7 +13,7 @@ public class TokenStream implements Outer {
     tokens.forEach(out::println);
   }
 
-  public void append(TokenStatement tokenBuffer) {
+  public void append(TokenBuffer tokenBuffer) {
     tokens.add(tokenBuffer.toToken());
   }
 }

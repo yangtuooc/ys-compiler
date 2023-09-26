@@ -2,7 +2,7 @@ package cn.yangtuooc.lexer;
 
 import cn.yangtuooc.dfa.DFA;
 import cn.yangtuooc.reader.CharacterReader;
-import cn.yangtuooc.token.TokenStatement;
+import cn.yangtuooc.token.TokenBuffer;
 import cn.yangtuooc.token.TokenStream;
 
 public class SimpleLexer {
@@ -18,8 +18,8 @@ public class SimpleLexer {
   public TokenStream tokenize() {
     TokenStream tokenStream = new TokenStream();
     while (characterReader.hasNext()) {
-      TokenStatement tokenStatement = dfa.move(characterReader);
-      tokenStream.append(tokenStatement);
+      TokenBuffer tokenBuffer = dfa.move(characterReader);
+      tokenStream.append(tokenBuffer);
     }
     return tokenStream;
   }
