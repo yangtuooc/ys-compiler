@@ -3,21 +3,22 @@ package cn.yangtuooc.dfa;
 import cn.yangtuooc.exception.SyntaxException;
 import cn.yangtuooc.reader.CharacterReader;
 import cn.yangtuooc.token.TokenBuffer;
+import cn.yangtuooc.token.TokenStream;
 import cn.yangtuooc.token.TokenType;
 
 public class DFA {
 
   private DFAState state = DFAState.INITIAL;
 
-  public TokenBuffer move(CharacterReader reader) {
-    TokenBuffer tokenBuffer = new TokenBuffer();
-    do {
-      if (!reader.hasNext()) {
-        return tokenBuffer;
-      }
-      moveDFA(reader.next(), tokenBuffer);
-    } while (reader.hasNext() && !isInitial());
-    return tokenBuffer;
+  private final TokenStream tokenStream = new TokenStream();
+
+  public TokenStream move(CharacterReader reader) {
+    while (reader.hasNext()) {
+      TokenBuffer buffer = new TokenBuffer();
+      moveDFA(reader, buffer);
+      tokenStream.append(buffer);
+    }
+    return tokenStream;
   }
 
 
@@ -25,50 +26,49 @@ public class DFA {
     return state == DFAState.INITIAL;
   }
 
-  private void moveDFA(Character ch, TokenBuffer buffer) {
-    moveState(ch);
-    if (state == DFAState.INITIAL) {
-      return;
-    }
-    buffer.setType(state.tokenType());
-    buffer.append(ch);
+  private void moveDFA(CharacterReader reader, TokenBuffer buffer) {
+    do {
+      if (!reader.hasNext()) {
+        break;
+      }
+      Character ch = reader.next();
+      DFAState dfaState = moveState(state, ch);
+      buffer.setType(dfaState.tokenType()); // fixme token type error
+      buffer.append(ch);
+      state = dfaState;
+
+      if (reader.hasNext()) {
+        if (moveState(dfaState, reader.peek()) == DFAState.SEMICOLON) {
+          break;
+        }
+      }
+    } while (reader.hasNext() && !isInitial());
   }
 
-  private void moveState(Character ch) {
-    switch (ch) {
-      case 'i':
-        state = DFAState.INT_1;
-        break;
-      case 'n':
-        state = DFAState.INT_2;
-        break;
-      case 't':
-        state = DFAState.INT_3;
-        break;
-      case '>':
-        state = DFAState.GT;
-        break;
-      case '=':
+  private DFAState moveState(DFAState currentState, Character ch) {
+    return switch (ch) {
+      case 'i' -> DFAState.INT_1;
+      case 'n' -> DFAState.INT_2;
+      case 't' -> DFAState.INT_3;
+      case '>' -> DFAState.GT;
+      case '=' -> {
         if (state == DFAState.GT) {
-          state = DFAState.GE;
-          break;
+          yield DFAState.GE;
         }
-        state = DFAState.ASSIGNMENT;
-        break;
-      case ' ', ';':
-        state = DFAState.INITIAL;
-        break;
-      default:
+        yield DFAState.ASSIGNMENT;
+      }
+      case ';' -> DFAState.SEMICOLON;
+      case ' ' -> DFAState.INITIAL;
+      default -> {
         if (isAlpha(ch) || isDigit(ch)) {
-          if (isDigit(ch) && state != DFAState.ID) {
-            state = DFAState.INT_LITERAL;
-            break;
+          if (isDigit(ch) && currentState != DFAState.ID) {
+            yield DFAState.INT_LITERAL;
           }
-          state = DFAState.ID;
-          break;
+          yield DFAState.ID;
         }
         throw new SyntaxException("unexpected symbol: " + ch);
-    }
+      }
+    };
   }
 
   /**
@@ -79,6 +79,7 @@ public class DFA {
    *
    * @param character   输入的字符
    * @param tokenBuffer token buffer，用于记录非终结状态下的token字符
+   * @deprecated use moveDFA to instead
    */
   private void move(Character character, TokenBuffer tokenBuffer) {
     switch (character) {

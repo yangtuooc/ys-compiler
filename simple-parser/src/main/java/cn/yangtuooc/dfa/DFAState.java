@@ -11,7 +11,8 @@ public enum DFAState {
   INT_LITERAL,
   ASSIGNMENT, // =
   GT, // >
-  GE; // >=
+  GE,  // >=
+  SEMICOLON;
 
   TokenType tokenType() {
     switch (this) {

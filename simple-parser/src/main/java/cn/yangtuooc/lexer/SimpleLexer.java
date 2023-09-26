@@ -16,11 +16,6 @@ public class SimpleLexer {
   }
 
   public TokenStream tokenize() {
-    TokenStream tokenStream = new TokenStream();
-    while (characterReader.hasNext()) {
-      TokenBuffer tokenBuffer = dfa.move(characterReader);
-      tokenStream.append(tokenBuffer);
-    }
-    return tokenStream;
+    return dfa.move(characterReader);
   }
 }

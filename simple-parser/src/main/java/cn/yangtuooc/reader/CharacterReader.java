@@ -29,4 +29,16 @@ public class CharacterReader implements SimpleReader {
       throw new RuntimeException(e);
     }
   }
+
+  @Override
+  public Character peek() {
+    try {
+      charArrayReader.mark(0);
+      int read = charArrayReader.read();
+      charArrayReader.reset();
+      return (char) read;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }

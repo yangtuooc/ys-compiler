@@ -4,4 +4,5 @@ import java.util.Iterator;
 
 public interface SimpleReader extends Iterator<Character> {
 
+  Character peek();
 }
