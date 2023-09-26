@@ -22,53 +22,117 @@ public class DFA {
   }
 
 
-  private boolean isInitial() {
-    return state == DFAState.INITIAL;
-  }
-
   private void moveDFA(CharacterReader reader, TokenBuffer buffer) {
-    do {
-      if (!reader.hasNext()) {
-        break;
-      }
+    while (reader.hasNext()) {
       Character ch = reader.next();
       state = moveState(state, ch);
-      if (state == DFAState.INITIAL) {
+      if (state.isUnknown()) {
+        throw new SyntaxException("syntax error: unexpected symbol '" + ch + "'");
+      }
+      if (state.isInitial()) {
         break;
       }
-      buffer.setType(state.tokenType());
       buffer.append(ch);
+      buffer.setType(state.tokenType());
 
+      if (state.isSemicolon()) {
+        state = DFAState.INITIAL;
+        break;
+      }
       if (reader.hasNext()) {
-        if (moveState(state, reader.peek()) == DFAState.SEMICOLON) {
+        DFAState nextState = moveState(state, reader.peek());
+        if (nextState.isUnknown() || nextState.isSemicolon()) {
+          state = DFAState.INITIAL;
           break;
         }
       }
-    } while (true);
+    }
   }
 
   private DFAState moveState(DFAState currentState, Character ch) {
     return switch (ch) {
-      case 'i' -> DFAState.INT_1;
-      case 'n' -> DFAState.INT_2;
-      case 't' -> DFAState.INT_3;
-      case '>' -> DFAState.GT;
+      case 'i' -> {
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.INT_1;
+        }
+        yield DFAState.ID;
+      }
+      case 'n' -> {
+        if (currentState == DFAState.INT_1) {
+          yield DFAState.INT_2;
+        }
+        yield DFAState.ID;
+      }
+      case 't' -> {
+        if (currentState == DFAState.INT_2) {
+          yield DFAState.INT_3;
+        }
+        yield DFAState.ID;
+      }
+      case '>' -> {
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.GT;
+        }
+        yield DFAState.UNKNOWN;
+      }
       case '=' -> {
-        if (state == DFAState.GT) {
+        if (currentState == DFAState.GT) {
           yield DFAState.GE;
         }
-        yield DFAState.ASSIGNMENT;
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.ASSIGNMENT;
+        }
+        yield DFAState.UNKNOWN;
       }
-      case ';' -> DFAState.SEMICOLON;
+      case '+' -> {
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.PLUS;
+        }
+        yield DFAState.UNKNOWN;
+      }
+      case '-' -> {
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.MINUS;
+        }
+        yield DFAState.UNKNOWN;
+      }
+      case '*' -> {
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.MUL;
+        }
+        yield DFAState.UNKNOWN;
+      }
+      case '/' -> {
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.DIV;
+        }
+        yield DFAState.UNKNOWN;
+      }
+      case ';' -> {
+        if (currentState != DFAState.ASSIGNMENT && currentState != DFAState.GT && currentState != DFAState.GE) {
+          yield DFAState.SEMICOLON;
+        }
+        yield DFAState.UNKNOWN;
+      }
       case ' ' -> DFAState.INITIAL;
       default -> {
+        if (
+            currentState != DFAState.ID
+                && currentState != DFAState.INT_LITERAL
+                && !currentState.isInitial()
+                && currentState != DFAState.INT_1
+                && currentState != DFAState.INT_2
+                && currentState != DFAState.INT_3
+        ) {
+          yield DFAState.UNKNOWN;
+        }
         if (isAlpha(ch) || isDigit(ch)) {
           if (isDigit(ch) && currentState != DFAState.ID) {
             yield DFAState.INT_LITERAL;
           }
           yield DFAState.ID;
         }
-        throw new SyntaxException("unexpected symbol: " + ch);
+        yield DFAState.UNKNOWN;
       }
     };
   }

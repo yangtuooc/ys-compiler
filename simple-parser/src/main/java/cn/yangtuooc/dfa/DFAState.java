@@ -3,16 +3,29 @@ package cn.yangtuooc.dfa;
 import cn.yangtuooc.token.TokenType;
 
 public enum DFAState {
-  INITIAL,
-  INT_1,
-  INT_2,
-  INT_3,
-  ID, // identifier
-  INT_LITERAL,
-  ASSIGNMENT, // =
-  GT, // >
-  GE,  // >=
-  SEMICOLON;
+  UNKNOWN(false),
+  INITIAL(false),
+  INT_1(false),
+  INT_2(false),
+  INT_3(true),
+  ID(true), // identifier
+  INT_LITERAL(true),
+  ASSIGNMENT(true), // =
+  GT(true), // >
+  GE(true),  // >=
+  SEMICOLON(true),
+  PLUS(false), MINUS(false), MUL(false), DIV(false);
+
+  private final boolean terminate;
+
+  public boolean isTerminate() {
+    return this.terminate;
+  }
+
+  DFAState(boolean terminate) {
+    this.terminate = terminate;
+  }
+
 
   TokenType tokenType() {
     switch (this) {
@@ -34,9 +47,34 @@ public enum DFAState {
       case SEMICOLON -> {
         return TokenType.SEMICOLON;
       }
+      case PLUS -> {
+        return TokenType.PLUS;
+      }
+      case MUL -> {
+        return TokenType.MUL;
+      }
+      case DIV -> {
+        return TokenType.DIV;
+      }
+      case MINUS -> {
+        return TokenType.MINUS;
+      }
       default -> {
         return TokenType.UNKNOWN;
       }
     }
+  }
+
+  public boolean isSemicolon() {
+    return this == SEMICOLON;
+  }
+
+  public boolean isInitial() {
+    return this == INITIAL;
+  }
+
+
+  public boolean isUnknown() {
+    return this == UNKNOWN;
   }
 }
