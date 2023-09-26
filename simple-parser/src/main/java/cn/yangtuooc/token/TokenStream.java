@@ -16,4 +16,8 @@ public class TokenStream implements Outer {
   public void append(TokenBuffer tokenBuffer) {
     tokens.add(tokenBuffer.toToken());
   }
+
+  public List<Token> getTokens() {
+    return this.tokens;
+  }
 }

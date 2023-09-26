@@ -15,6 +15,8 @@ public class Main {
     TokenStream tokenStream = simpleLexer.tokenize();
     tokenStream.dump(System.out);
 
+    System.out.println("--------------------------");
+
     SimpleParser simpleParser = new SimpleParser(tokenStream);
     ASTNode astNode = simpleParser.parse();
     astNode.dump(System.out);
