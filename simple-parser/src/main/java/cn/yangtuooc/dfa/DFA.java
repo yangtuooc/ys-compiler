@@ -32,17 +32,19 @@ public class DFA {
         break;
       }
       Character ch = reader.next();
-      DFAState dfaState = moveState(state, ch);
-      buffer.setType(dfaState.tokenType()); // fixme token type error
+      state = moveState(state, ch);
+      if (state == DFAState.INITIAL) {
+        break;
+      }
+      buffer.setType(state.tokenType());
       buffer.append(ch);
-      state = dfaState;
 
       if (reader.hasNext()) {
-        if (moveState(dfaState, reader.peek()) == DFAState.SEMICOLON) {
+        if (moveState(state, reader.peek()) == DFAState.SEMICOLON) {
           break;
         }
       }
-    } while (reader.hasNext() && !isInitial());
+    } while (true);
   }
 
   private DFAState moveState(DFAState currentState, Character ch) {

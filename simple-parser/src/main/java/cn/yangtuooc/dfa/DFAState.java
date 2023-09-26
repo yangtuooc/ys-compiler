@@ -31,6 +31,9 @@ public enum DFAState {
       case GE -> {
         return TokenType.GE;
       }
+      case SEMICOLON -> {
+        return TokenType.SEMICOLON;
+      }
       default -> {
         return TokenType.UNKNOWN;
       }
