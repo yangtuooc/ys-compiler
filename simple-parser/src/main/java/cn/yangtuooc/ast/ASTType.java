@@ -1,5 +1,5 @@
 package cn.yangtuooc.ast;
 
 public enum ASTType {
-  PROGRAM
+  INT_LITERNAL, ID, MUL, PLUS, PROGRAM
 }

@@ -8,7 +8,6 @@ public class SimpleASTNode implements ASTNode {
 
   private final ASTType type;
   private final String text;
-  private ASTNode parent;
   private final List<ASTNode> children = new ArrayList<>();
 
   public SimpleASTNode(ASTType type, String text) {
@@ -16,15 +15,10 @@ public class SimpleASTNode implements ASTNode {
     this.text = text;
   }
 
-
-  @Override
-  public void dump(PrintStream out) {
-    if (parent != null) {
-      out.println(parent);
-    }
-    out.println(this);
+  public void dump(PrintStream out, String indent) {
+    out.println(indent + this);
     for (ASTNode child : children) {
-      child.dump(out);
+      child.dump(out, indent + "\t\t");
     }
   }
 
@@ -45,6 +39,6 @@ public class SimpleASTNode implements ASTNode {
 
   @Override
   public String toString() {
-    return String.format("[ %s : %s ]", this.type.name(), this.text);
+    return String.format(" %s : %s ", this.type.name(), this.text);
   }
 }

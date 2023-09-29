@@ -11,7 +11,7 @@ public class TokenStream implements Outer {
   private final List<Token> tokens = new ArrayList<>();
 
   public Token peek() {
-    if (pos > tokens.size()) {
+    if (pos >= tokens.size()) {
       return null;
     }
     return tokens.get(pos);
@@ -21,7 +21,7 @@ public class TokenStream implements Outer {
     if (pos > tokens.size()) {
       return null;
     }
-    return tokens.get(pos);
+    return tokens.get(pos++);
   }
 
   public void unread() {

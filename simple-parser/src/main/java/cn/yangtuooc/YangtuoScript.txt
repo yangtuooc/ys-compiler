@@ -15,14 +15,16 @@ assignmentStatement: Id '=' expressionStatement ';';
 
 primaryExpression: Id | IntLiteral | '(' additiveExpression ')';
 
-
-additiveStatement
+additiveExpression
   : multiplicativeExpression      # 这里是为了消除左递归，因为语法解析是采用‘递归下降分析法’
   | additiveExpression Plus multiplicativeExpression
 
-multiplicativeStatement
+multiplicativeExpression
   : primaryExpression
-  | multiplicativeStatement Star primaryExpression
+  | multiplicativeExpression Star primaryExpression
+
+
+
 
 # 词法规则
 Id: [a-zA-Z_][a-zA-Z_]*[0-9]*

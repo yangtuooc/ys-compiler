@@ -3,28 +3,18 @@ package cn.yangtuooc.dfa;
 import cn.yangtuooc.token.TokenType;
 
 public enum DFAState {
-  UNKNOWN(false),
-  INITIAL(false),
-  INT_1(false),
-  INT_2(false),
-  INT_3(true),
-  ID(true), // identifier
-  INT_LITERAL(true),
-  ASSIGNMENT(true), // =
-  GT(true), // >
-  GE(true),  // >=
-  SEMICOLON(true),
-  PLUS(false), MINUS(false), MUL(false), DIV(false);
-
-  private final boolean terminate;
-
-  public boolean isTerminate() {
-    return this.terminate;
-  }
-
-  DFAState(boolean terminate) {
-    this.terminate = terminate;
-  }
+  UNKNOWN,
+  INITIAL,
+  INT_1,
+  INT_2,
+  INT_3,
+  ID, // identifier
+  INT_LITERAL,
+  ASSIGNMENT, // =
+  GT, // >
+  GE,  // >=
+  SEMICOLON,
+  PLUS, MINUS, MUL, DIV, LEFT_PAREN, RIGHT_PAREN;
 
 
   TokenType tokenType() {
@@ -58,6 +48,12 @@ public enum DFAState {
       }
       case MINUS -> {
         return TokenType.MINUS;
+      }
+      case LEFT_PAREN -> {
+        return TokenType.LEFT_PAREN;
+      }
+      case RIGHT_PAREN -> {
+        return TokenType.RIGHT_PAREN;
       }
       default -> {
         return TokenType.UNKNOWN;

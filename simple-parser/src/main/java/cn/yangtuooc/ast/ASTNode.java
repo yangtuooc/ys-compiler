@@ -1,11 +1,10 @@
 package cn.yangtuooc.ast;
 
-import cn.yangtuooc.dump.Outer;
 import java.io.PrintStream;
 
-public interface ASTNode extends Outer {
+public interface ASTNode {
 
-  void dump(PrintStream out);
+  void dump(PrintStream out, String indent);
 
   void addChild(ASTNode node);
 

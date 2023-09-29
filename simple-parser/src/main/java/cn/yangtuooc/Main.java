@@ -12,16 +12,15 @@ import cn.yangtuooc.token.TokenStream;
 public class Main {
 
   public static void main(String[] args) {
-    String script = "2+3*5";
+    String script = "3*(5+2)";
     CharacterReader reader = new CharacterReader(script);
     SimpleLexer simpleLexer = new SimpleLexer(reader);
     TokenStream tokenStream = simpleLexer.tokenize();
     tokenStream.dump(System.out);
 
     System.out.println("--------------------------");
-
     SimpleParser simpleParser = new SimpleParser(tokenStream);
     ASTNode astNode = simpleParser.parse();
-    astNode.dump(System.out);
+    astNode.dump(System.out, "");
   }
 }

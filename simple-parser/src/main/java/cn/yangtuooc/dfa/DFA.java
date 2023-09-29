@@ -51,6 +51,18 @@ public class DFA {
 
   private DFAState moveState(DFAState currentState, Character ch) {
     return switch (ch) {
+      case ')' -> {
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.RIGHT_PAREN;
+        }
+        yield DFAState.UNKNOWN;
+      }
+      case '(' -> {
+        if (currentState == DFAState.INITIAL) {
+          yield DFAState.LEFT_PAREN;
+        }
+        yield DFAState.UNKNOWN;
+      }
       case 'i' -> {
         if (currentState == DFAState.INITIAL) {
           yield DFAState.INT_1;
