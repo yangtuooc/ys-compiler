@@ -14,7 +14,9 @@ import cn.yangtuooc.token.TokenStream;
  * sub -> sub - expr | primitive
  * mul -> mul * expr | primitive
  * div -> div / expr | primitive
+ * id -> [a-zA-Z]+[a-zA-Z_][0-9]*
  * primitive -> [0-9]+
+ *
  *
  * fixme: 这个文法规则会有结合性问题：2+3+5，应该先计算2+3，而上述文法是先计算3+5
  *
@@ -22,7 +24,7 @@ import cn.yangtuooc.token.TokenStream;
 public class Main {
 
   public static void main(String[] args) {
-    String script = "int intage > 45;";
+    String script = "int age = 3 + 45;";
     CharacterReader reader = new CharacterReader(script);
     SimpleLexer simpleLexer = new SimpleLexer(reader);
     TokenStream tokenStream = simpleLexer.tokenize();
