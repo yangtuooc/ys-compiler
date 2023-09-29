@@ -7,19 +7,7 @@ import cn.yangtuooc.reader.CharacterReader;
 import cn.yangtuooc.token.TokenStream;
 
 /**
- * 支持语法规则：
- *
- * expr -> add | sub | mul | div
- * add -> add + expr | primitive
- * sub -> sub - expr | primitive
- * mul -> mul * expr | primitive
- * div -> div / expr | primitive
- * id -> [a-zA-Z]+[a-zA-Z_][0-9]*
- * primitive -> [0-9]+
- *
- *
- * fixme: 这个文法规则会有结合性问题：2+3+5，应该先计算2+3，而上述文法是先计算3+5
- *
+ * 词法+语法规则定义：YangtuoScript.txt
  */
 public class Main {
 

@@ -1,0 +1,45 @@
+# 语法规则
+program: statement+;
+
+statement
+  : intDeclaration
+  | expressionStatement
+  | assignmentStatement
+  ;
+
+intDeclaration: 'int' Id ( '=' additiveExpression)? ';';
+
+expressionStatement: additiveExpression ';';
+
+assignmentStatement: Id '=' expressionStatement ';';
+
+primaryExpression: Id | IntLiteral | '(' additiveExpression ')';
+
+
+additiveStatement
+  : multiplicativeExpression      # 这里是为了消除左递归，因为语法解析是采用‘递归下降分析法’
+  | additiveExpression Plus multiplicativeExpression
+
+multiplicativeStatement
+  : IntLiteral
+  | multiplicativeStatement Star IntLiteral
+
+# 词法规则
+Id: [a-zA-Z_][a-zA-Z_]*[0-9]*
+IntLiteral: [0-9]+
+
+
+---
+根据上述语法规则的定义，对于算数表达式：2+3*5推导如下：
+
+-->additiveExpression + multiplicativeExpression
+-->multiplicativeExpression + multiplicativeExpression
+-->IntLiteral + multiplicativeExpression
+-->IntLiteral + multiplicativeExpression * IntLiteral
+-->IntLiteral + IntLiteral * IntLiteral
+
+语法解析本身就是一个不断尝试+回溯的过程
+
+
+
+
