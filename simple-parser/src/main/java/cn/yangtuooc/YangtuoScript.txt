@@ -29,6 +29,8 @@ multiplicativeExpression
 # 词法规则
 Id: [a-zA-Z_][a-zA-Z_]*[0-9]*
 IntLiteral: [0-9]+
+Plus: '+'
+Star: '*'
 
 
 ---
@@ -39,8 +41,6 @@ IntLiteral: [0-9]+
 -->IntLiteral + multiplicativeExpression
 -->IntLiteral + multiplicativeExpression * IntLiteral
 -->IntLiteral + IntLiteral * IntLiteral
-
-语法解析本身就是一个不断尝试+回溯的过程
 
 
 

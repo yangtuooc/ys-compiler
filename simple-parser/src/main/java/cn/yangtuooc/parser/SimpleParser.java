@@ -33,7 +33,7 @@ public class SimpleParser {
       Token lookahead = ts.peek();
       if (lookahead != null && lookahead.type() == TokenType.PLUS) {
         Token plus = ts.read();
-        ASTNode right = multiplicative(ts);
+        ASTNode right = additive(ts);
         if (right == null) {
           throw new SyntaxException("invalid additive expression, expecting the right part.");
         }
@@ -53,7 +53,7 @@ public class SimpleParser {
       if (lookahead != null) {
         if (lookahead.type() == TokenType.MUL) {
           Token mul = ts.read();
-          ASTNode right = primary(ts);
+          ASTNode right = multiplicative(ts);
           if (right == null) {
             throw new SyntaxException("invalid multiplicative expression, expecting the right part.");
           }
