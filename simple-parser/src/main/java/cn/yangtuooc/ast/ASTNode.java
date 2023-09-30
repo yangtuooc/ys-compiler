@@ -11,4 +11,6 @@ public interface ASTNode {
   ASTType getType();
 
   String getValue();
+
+  void accept(ASTNodeVisitor visitor);
 }

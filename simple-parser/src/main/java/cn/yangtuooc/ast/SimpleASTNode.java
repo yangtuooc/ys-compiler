@@ -38,6 +38,11 @@ public class SimpleASTNode implements ASTNode {
   }
 
   @Override
+  public void accept(ASTNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
+  @Override
   public String toString() {
     return String.format(" %s : %s ", this.type.name(), this.text);
   }
