@@ -23,6 +23,20 @@ additive
   : multiplicative
   | additive plus additive
 
+additive
+  : multiplicative R
+  ;
+
+R
+  : plus additive R
+  | 'ε'
+
+# 采用EBNF表示
+expr : term (('+' | '-') term)* ';' ;
+term : factor (('*' | '/') factor)* ;
+factor : NUMBER ;
+NUMBER : [0-9]+ ;
+
 multiplicative
   : primary
   | multiplicative star multiplicative
