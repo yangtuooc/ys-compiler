@@ -30,16 +30,18 @@ public class SimpleParser {
     ASTNode node = left;
 
     if (left != null) {
-      Token lookahead = ts.peek();
-      if (lookahead != null && lookahead.type() == TokenType.PLUS) {
-        Token plus = ts.read();
-        ASTNode right = additive(ts);
-        if (right == null) {
-          throw new SyntaxException("invalid additive expression, expecting the right part.");
+      while (true) {
+        Token lookahead = ts.peek();
+        if (lookahead != null && lookahead.type() == TokenType.PLUS) {
+          Token plus = ts.read();
+          ASTNode right = multiplicative(ts);
+          node = new SimpleASTNode(ASTType.PLUS, plus.value());
+          node.addChild(left);
+          node.addChild(right);
+          left = node;
+        } else {
+          break;
         }
-        node = new SimpleASTNode(ASTType.PLUS, plus.value());
-        node.addChild(left);
-        node.addChild(right);
       }
     }
     return node;
@@ -49,17 +51,17 @@ public class SimpleParser {
     ASTNode left = primary(ts);
     ASTNode node = left;
     if (left != null) {
-      Token lookahead = ts.peek();
-      if (lookahead != null) {
-        if (lookahead.type() == TokenType.MUL) {
-          Token mul = ts.read();
-          ASTNode right = multiplicative(ts);
-          if (right == null) {
-            throw new SyntaxException("invalid multiplicative expression, expecting the right part.");
-          }
-          node = new SimpleASTNode(ASTType.MUL, mul.value());
+      while (true) {
+        Token lookahead = ts.peek();
+        if (lookahead != null && lookahead.type() == TokenType.MUL) {
+          Token star = ts.read();
+          ASTNode right = primary(ts);
+          node = new SimpleASTNode(ASTType.MUL, star.value());
           node.addChild(left);
           node.addChild(right);
+          left = node;
+        } else {
+          break;
         }
       }
     }

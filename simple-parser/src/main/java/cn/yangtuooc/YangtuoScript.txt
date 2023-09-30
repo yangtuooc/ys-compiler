@@ -31,6 +31,8 @@ R
   : plus additive R
   | 'ε'
 
+# 采用递归下降分析法还是会存在结合性问题，需要将‘递归’转换为‘循环’
+
 # 采用EBNF表示
 expr : term (('+' | '-') term)* ';' ;
 term : factor (('*' | '/') factor)* ;
