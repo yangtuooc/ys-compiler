@@ -77,7 +77,7 @@ public class SimpleParser {
       if (type == TokenType.ID) {
         node = new SimpleASTNode(ASTType.ID, read.value());
       } else if (type == TokenType.INT_LITERAL) {
-        node = new SimpleASTNode(ASTType.INT_LITERNAL, read.value());
+        node = new SimpleASTNode(ASTType.INT_LITERAL, read.value());
       } else if (type == TokenType.LEFT_PAREN) {
         node = additive(ts);
         if (node == null) {

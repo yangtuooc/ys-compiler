@@ -1,6 +1,7 @@
 package cn.yangtuooc;
 
 import cn.yangtuooc.ast.ASTNode;
+import cn.yangtuooc.evaluator.SimpleEvaluator;
 import cn.yangtuooc.lexer.SimpleLexer;
 import cn.yangtuooc.parser.SimpleParser;
 import cn.yangtuooc.reader.CharacterReader;
@@ -12,7 +13,7 @@ import cn.yangtuooc.token.TokenStream;
 public class Main {
 
   public static void main(String[] args) {
-    String script = "2+3*4";
+    String script = "2*3+(4+2)";
     CharacterReader reader = new CharacterReader(script);
     SimpleLexer simpleLexer = new SimpleLexer(reader);
     TokenStream tokenStream = simpleLexer.tokenize();
@@ -22,5 +23,10 @@ public class Main {
     SimpleParser simpleParser = new SimpleParser(tokenStream);
     ASTNode astNode = simpleParser.parse();
     astNode.dump(System.out, "");
+
+    System.out.println("--------------------------");
+    SimpleEvaluator evaluator = new SimpleEvaluator();
+    Integer result = evaluator.visit(astNode);
+    System.out.println("evaluate result: " + result);
   }
 }

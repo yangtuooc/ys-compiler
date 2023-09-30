@@ -1,6 +1,6 @@
 package cn.yangtuooc.ast;
 
-public interface ASTNodeVisitor {
+public interface ASTNodeVisitor<R> {
 
-  void visit(ASTNode node);
+  R visit(ASTNode node);
 }

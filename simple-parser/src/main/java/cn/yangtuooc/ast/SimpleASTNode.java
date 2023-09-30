@@ -8,11 +8,25 @@ public class SimpleASTNode implements ASTNode {
 
   private final ASTType type;
   private final String text;
+
+  private ASTNode parent;
+
   private final List<ASTNode> children = new ArrayList<>();
+
 
   public SimpleASTNode(ASTType type, String text) {
     this.type = type;
     this.text = text;
+  }
+
+  @Override
+  public ASTNode getParent() {
+    return this.parent;
+  }
+
+  @Override
+  public void setParent(ASTNode parent) {
+    this.parent = parent;
   }
 
   public void dump(PrintStream out, String indent) {
@@ -25,6 +39,12 @@ public class SimpleASTNode implements ASTNode {
   @Override
   public void addChild(ASTNode node) {
     this.children.add(node);
+    node.setParent(this);
+  }
+
+  @Override
+  public List<ASTNode> getChildren() {
+    return children;
   }
 
   @Override
@@ -38,7 +58,7 @@ public class SimpleASTNode implements ASTNode {
   }
 
   @Override
-  public void accept(ASTNodeVisitor visitor) {
+  public <R> void accept(ASTNodeVisitor<R> visitor) {
     visitor.visit(this);
   }
 
