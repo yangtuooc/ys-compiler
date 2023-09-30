@@ -2,27 +2,36 @@
 program: statement+;
 
 statement
-  : intDeclaration
-  | expressionStatement
-  | assignmentStatement
+  : dcl  # declaration statement
+  | expr  # expression statement
+  | assign  # assignment statement
   ;
 
-intDeclaration: 'int' Id ( '=' additiveExpression)? ';';
+dcl
+  : 'int' Id ( '=' additive )? ';'
+  ;
 
-expressionStatement: additiveExpression ';';
+expr
+  : additive ';'
+  ;
 
-assignmentStatement: Id '=' expressionStatement ';';
+assign
+  : Id '=' expr ';'
+  ;
 
-primaryExpression: Id | IntLiteral | '(' additiveExpression ')';
+additive
+  : multiplicative
+  | additive plus additive
 
-additiveExpression
-  : multiplicativeExpression      # 这里是为了消除左递归，因为语法解析是采用‘递归下降分析法’
-  | additiveExpression Plus multiplicativeExpression
+multiplicative
+  : primary
+  | multiplicative star multiplicative
 
-multiplicativeExpression
-  : primaryExpression
-  | multiplicativeExpression Star primaryExpression
-
+primary
+  : Id
+  | IntLiteral
+  | '(' additive ')'
+  ;
 
 
 
@@ -33,14 +42,8 @@ Plus: '+'
 Star: '*'
 
 
----
-根据上述语法规则的定义，对于算数表达式：2+3*5推导如下：
 
--->additiveExpression + multiplicativeExpression
--->multiplicativeExpression + multiplicativeExpression
--->IntLiteral + multiplicativeExpression
--->IntLiteral + multiplicativeExpression * IntLiteral
--->IntLiteral + IntLiteral * IntLiteral
+
 
 
 
