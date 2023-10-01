@@ -1,7 +1,7 @@
 package cn.yangtuooc.ast;
 
 public enum ASTType {
-  INT_LITERAL, ID, MUL, PLUS, PROGRAM;
+  INT_LITERAL, ID, MUL, PLUS, PROGRAM, ASSIGNMENT;
 
 
   @Override

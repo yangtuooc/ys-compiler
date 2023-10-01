@@ -13,7 +13,7 @@ import cn.yangtuooc.token.TokenStream;
 public class Main {
 
   public static void main(String[] args) {
-    String script = "2*3+(4+2)";
+    String script = "int age = 10; age = age + 40;";
     CharacterReader reader = new CharacterReader(script);
     SimpleLexer simpleLexer = new SimpleLexer(reader);
     TokenStream tokenStream = simpleLexer.tokenize();

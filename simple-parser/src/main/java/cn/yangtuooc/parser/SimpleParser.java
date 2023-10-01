@@ -18,11 +18,97 @@ public class SimpleParser {
 
   public ASTNode parse() {
     SimpleASTNode yangtuoScript = new SimpleASTNode(ASTType.PROGRAM, "YangtuoScript");
-    ASTNode astNode = additive(tokenStream);
-    if (astNode != null) {
-      yangtuoScript.addChild(astNode);
+    Token lookahead;
+    while ((lookahead = tokenStream.peek()) != null) {
+      if ("int".contains(lookahead.value())) {
+        ASTNode dcl = dcl(tokenStream);
+        if (dcl != null) {
+          yangtuoScript.addChild(dcl);
+          continue;
+        }
+        throw new SyntaxException("unsupported syntax: " + lookahead.value());
+      }
+      ASTNode expr = expr(tokenStream);
+      if (expr != null) {
+        yangtuoScript.addChild(expr);
+        continue;
+      }
+      ASTNode assign = assign(tokenStream);
+      if (assign != null) {
+        yangtuoScript.addChild(assign);
+        continue;
+      }
+      throw new SyntaxException("unsupported syntax: " + lookahead.value());
     }
     return yangtuoScript;
+  }
+
+  private ASTNode dcl(TokenStream ts) {
+    int pos = ts.getPosition();
+    Token intPeek = ts.peek();
+    if (intPeek != null && intPeek.type() == TokenType.ID) {
+      ts.read();
+      Token idPeek = ts.peek();
+      if (idPeek != null && idPeek.type() == TokenType.ID) {
+        Token idToken = ts.read();
+        SimpleASTNode idNode = new SimpleASTNode(ASTType.ID, idToken.value());
+        Token assignPeek = ts.peek();
+        if (assignPeek != null && assignPeek.type() == TokenType.ASSIGNMENT) {
+          Token assignToken = ts.read();
+          ASTNode additive = additive(ts);
+          Token semicolonPeek = ts.peek();
+          if (semicolonPeek != null && semicolonPeek.type() == TokenType.SEMICOLON) {
+            ts.read();
+            SimpleASTNode assignNode = new SimpleASTNode(ASTType.ASSIGNMENT, assignToken.value());
+            assignNode.addChild(idNode);
+            assignNode.addChild(additive);
+            return assignNode;
+          } else {
+            throw new SyntaxException("expecting ';', but got empty");
+          }
+        } else {
+          ts.SetPosition(pos);
+          return null;
+        }
+      }
+    }
+    return null;
+  }
+
+  private ASTNode expr(TokenStream ts) {
+    int pos = ts.getPosition();
+    ASTNode additive = additive(ts);
+    Token semicolonPeek = ts.peek();
+    if (semicolonPeek != null && semicolonPeek.type() == TokenType.SEMICOLON) {
+      ts.read();
+      return additive;
+    }
+    ts.SetPosition(pos);
+    return null;
+  }
+
+  private ASTNode assign(TokenStream ts) {
+    ASTNode node = null;
+    int pos = ts.getPosition();
+    Token idPeek = ts.peek();
+    if (idPeek != null && idPeek.type() == TokenType.ID) {
+      SimpleASTNode idNode = new SimpleASTNode(ASTType.ID, ts.read().value());
+      Token assignPeek = ts.peek();
+      if (assignPeek != null && assignPeek.type() == TokenType.ASSIGNMENT) {
+        SimpleASTNode assignNode = new SimpleASTNode(ASTType.ASSIGNMENT, ts.read().value());
+        ASTNode exprNode = expr(ts);
+        if (exprNode != null) {
+          assignNode.addChild(idNode);
+          assignNode.addChild(exprNode);
+          node = assignNode;
+        } else {
+          ts.SetPosition(pos);
+        }
+      } else {
+        ts.SetPosition(pos);
+      }
+    }
+    return node;
   }
 
   private ASTNode additive(TokenStream ts) {
@@ -73,19 +159,17 @@ public class SimpleParser {
     Token lookahead = ts.peek();
     if (lookahead != null) {
       TokenType type = lookahead.type();
-      Token read = ts.read();
-      if (type == TokenType.ID) {
-        node = new SimpleASTNode(ASTType.ID, read.value());
-      } else if (type == TokenType.INT_LITERAL) {
-        node = new SimpleASTNode(ASTType.INT_LITERAL, read.value());
-      } else if (type == TokenType.LEFT_PAREN) {
-        node = additive(ts);
-        if (node == null) {
-          throw new SyntaxException("expecting an additive expression inside parenthesis");
-        }
-        lookahead = ts.peek();
-        if (lookahead == null || ts.read().type() != TokenType.RIGHT_PAREN) {
-          throw new SyntaxException("expecting right parenthesis");
+      switch (type) {
+        case ID -> node = new SimpleASTNode(ASTType.ID, ts.read().value());
+        case INT_LITERAL -> node = new SimpleASTNode(ASTType.INT_LITERAL, ts.read().value());
+        case LEFT_PAREN -> {
+          ts.read();
+          node = additive(ts);
+          Token rightParen = ts.read();
+          if (TokenType.RIGHT_PAREN != rightParen.type()) {
+            throw new SyntaxException(STR. "expecting ')', but got '\{ rightParen.type() }'" );
+          }
+          return node;
         }
       }
     }

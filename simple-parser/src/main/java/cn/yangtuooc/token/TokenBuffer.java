@@ -6,6 +6,10 @@ public class TokenBuffer {
 
   private final StringBuffer buffer = new StringBuffer();
 
+  public boolean isEmpty() {
+    return buffer.isEmpty();
+  }
+
   public void append(Character character) {
     buffer.append(character);
   }

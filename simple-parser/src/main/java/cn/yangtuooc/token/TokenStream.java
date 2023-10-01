@@ -41,4 +41,12 @@ public class TokenStream implements Outer {
   public List<Token> getTokens() {
     return this.tokens;
   }
+
+  public int getPosition() {
+    return pos;
+  }
+
+  public void SetPosition(int pos) {
+    this.pos = pos;
+  }
 }

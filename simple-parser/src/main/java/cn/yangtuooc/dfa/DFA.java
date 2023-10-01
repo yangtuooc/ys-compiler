@@ -16,6 +16,9 @@ public class DFA {
     while (reader.hasNext()) {
       TokenBuffer buffer = new TokenBuffer();
       moveDFA(reader, buffer);
+      if (buffer.isEmpty()) {
+        continue;
+      }
       tokenStream.append(buffer);
     }
     return tokenStream;
