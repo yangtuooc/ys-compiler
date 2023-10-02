@@ -4,58 +4,40 @@ import SimpleLexer;
 
 prog: statement*;
 
-statement
-  : IF parExpression statement (ELSE statement)?
-  | FOR '(' forControl ')' statement
-  | WHILE parExpression statement
-  | DO statement WHILE parExpression ';'
-  | RETURN expression? ';'
-  | BREAK identifier? ';'
-  | CONTINUE identifier? ';'
-  | SEMI
-  ;
-
-parExpression: '(' expression ')';
-
-forControl:forInit? ';' expression? ';' forUpdate=expressionList?;
-
-forInit: expressionList;
-
-expressionList: expression (',' expression)*;
+statement:expression*';';
 
 expression
-    : primary
-//    | expression bop='.'
-//      ( IDENTIFIER
-//      | functionCall
-//      | THIS
-//      )
-    | expression '[' expression ']'
-//    | functionCall
-    | expression postfix=('++' | '--')
-    | prefix=('+'|'-'|'++'|'--') expression
-    | prefix=('~'|'!') expression
-    | expression bop=('*'|'/'|'%') expression
-    | expression bop=('+'|'-') expression
-    | expression ('<' '<' | '>' '>' '>' | '>' '>') expression
-    | expression bop=('<=' | '>=' | '>' | '<') expression
-//    | expression bop=INSTANCEOF typeType
-    | expression bop=('==' | '!=') expression
-    | expression bop='&' expression
-    | expression bop='^' expression
-    | expression bop='|' expression
-    | expression bop='&&' expression
-    | expression bop='||' expression
-    | expression bop='?' expression ':' expression
-    | <assoc=right> expression
-      bop=('=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '>>=' | '>>>=' | '<<=' | '%=')
-      expression
-    ;
-
-literal
-  : integerLiteral
-  | floatLiteral
+  : additiveExpression
+  | subtractionExpression
+  | multiplicativeExpression
+  | divisionExpression
   ;
+
+additiveExpression
+  : multiplicativeExpression
+  | divisionExpression
+  | additiveExpression '+' multiplicativeExpression
+  | additiveExpression '+' divisionExpression
+  ;
+
+subtractionExpression
+  : multiplicativeExpression
+  | divisionExpression
+  | subtractionExpression '-' multiplicativeExpression
+  | subtractionExpression '-' divisionExpression
+  ;
+
+multiplicativeExpression
+  : primary
+  | multiplicativeExpression '*' primary
+  ;
+
+divisionExpression
+  : primary
+  | divisionExpression '/' primary
+  ;
+
+literal: integerLiteral;
 
 integerLiteral
     : DECIMAL_LITERAL
@@ -64,18 +46,12 @@ integerLiteral
     | BINARY_LITERAL
     ;
 
-floatLiteral
-    : FLOAT_LITERAL
-    | HEX_FLOAT_LITERAL
-    ;
-
 identifier
   : IDENTIFIER
   ;
 
 primary
   : '(' expression ')'
-  | THIS
   | literal
   | identifier
 ;

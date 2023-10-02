@@ -28,46 +28,6 @@ public interface YangtuoScriptListener extends ParseTreeListener {
 	 */
 	void exitStatement(YangtuoScriptParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link YangtuoScriptParser#parExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterParExpression(YangtuoScriptParser.ParExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link YangtuoScriptParser#parExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitParExpression(YangtuoScriptParser.ParExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link YangtuoScriptParser#forControl}.
-	 * @param ctx the parse tree
-	 */
-	void enterForControl(YangtuoScriptParser.ForControlContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link YangtuoScriptParser#forControl}.
-	 * @param ctx the parse tree
-	 */
-	void exitForControl(YangtuoScriptParser.ForControlContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link YangtuoScriptParser#forInit}.
-	 * @param ctx the parse tree
-	 */
-	void enterForInit(YangtuoScriptParser.ForInitContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link YangtuoScriptParser#forInit}.
-	 * @param ctx the parse tree
-	 */
-	void exitForInit(YangtuoScriptParser.ForInitContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link YangtuoScriptParser#expressionList}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionList(YangtuoScriptParser.ExpressionListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link YangtuoScriptParser#expressionList}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionList(YangtuoScriptParser.ExpressionListContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link YangtuoScriptParser#expression}.
 	 * @param ctx the parse tree
 	 */
@@ -77,6 +37,46 @@ public interface YangtuoScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpression(YangtuoScriptParser.ExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link YangtuoScriptParser#additiveExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditiveExpression(YangtuoScriptParser.AdditiveExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link YangtuoScriptParser#additiveExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditiveExpression(YangtuoScriptParser.AdditiveExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link YangtuoScriptParser#subtractionExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubtractionExpression(YangtuoScriptParser.SubtractionExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link YangtuoScriptParser#subtractionExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubtractionExpression(YangtuoScriptParser.SubtractionExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link YangtuoScriptParser#multiplicativeExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplicativeExpression(YangtuoScriptParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link YangtuoScriptParser#multiplicativeExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplicativeExpression(YangtuoScriptParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link YangtuoScriptParser#divisionExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterDivisionExpression(YangtuoScriptParser.DivisionExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link YangtuoScriptParser#divisionExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitDivisionExpression(YangtuoScriptParser.DivisionExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link YangtuoScriptParser#literal}.
 	 * @param ctx the parse tree
@@ -97,16 +97,6 @@ public interface YangtuoScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIntegerLiteral(YangtuoScriptParser.IntegerLiteralContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link YangtuoScriptParser#floatLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void enterFloatLiteral(YangtuoScriptParser.FloatLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link YangtuoScriptParser#floatLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void exitFloatLiteral(YangtuoScriptParser.FloatLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link YangtuoScriptParser#identifier}.
 	 * @param ctx the parse tree

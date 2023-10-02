@@ -38,15 +38,14 @@ public class YangtuoScriptParser extends Parser {
 		RSHIFT_ASSIGN=119, URSHIFT_ASSIGN=120, ARROW=121, COLONCOLON=122, AT=123, 
 		ELLIPSIS=124, WS=125, COMMENT=126, LINE_COMMENT=127, IDENTIFIER=128;
 	public static final int
-		RULE_prog = 0, RULE_statement = 1, RULE_parExpression = 2, RULE_forControl = 3, 
-		RULE_forInit = 4, RULE_expressionList = 5, RULE_expression = 6, RULE_literal = 7, 
-		RULE_integerLiteral = 8, RULE_floatLiteral = 9, RULE_identifier = 10, 
-		RULE_primary = 11;
+		RULE_prog = 0, RULE_statement = 1, RULE_expression = 2, RULE_additiveExpression = 3, 
+		RULE_subtractionExpression = 4, RULE_multiplicativeExpression = 5, RULE_divisionExpression = 6, 
+		RULE_literal = 7, RULE_integerLiteral = 8, RULE_identifier = 9, RULE_primary = 10;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"prog", "statement", "parExpression", "forControl", "forInit", "expressionList", 
-			"expression", "literal", "integerLiteral", "floatLiteral", "identifier", 
-			"primary"
+			"prog", "statement", "expression", "additiveExpression", "subtractionExpression", 
+			"multiplicativeExpression", "divisionExpression", "literal", "integerLiteral", 
+			"identifier", "primary"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -181,17 +180,17 @@ public class YangtuoScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(27);
+			setState(25);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1125968632621072L) != 0) || _la==SEMI) {
+			while (((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & 2305843009213827087L) != 0)) {
 				{
 				{
-				setState(24);
+				setState(22);
 				statement();
 				}
 				}
-				setState(29);
+				setState(27);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -210,35 +209,13 @@ public class YangtuoScriptParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class StatementContext extends ParserRuleContext {
-		public TerminalNode IF() { return getToken(YangtuoScriptParser.IF, 0); }
-		public ParExpressionContext parExpression() {
-			return getRuleContext(ParExpressionContext.class,0);
-		}
-		public List<StatementContext> statement() {
-			return getRuleContexts(StatementContext.class);
-		}
-		public StatementContext statement(int i) {
-			return getRuleContext(StatementContext.class,i);
-		}
-		public TerminalNode ELSE() { return getToken(YangtuoScriptParser.ELSE, 0); }
-		public TerminalNode FOR() { return getToken(YangtuoScriptParser.FOR, 0); }
-		public TerminalNode LPAREN() { return getToken(YangtuoScriptParser.LPAREN, 0); }
-		public ForControlContext forControl() {
-			return getRuleContext(ForControlContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(YangtuoScriptParser.RPAREN, 0); }
-		public TerminalNode WHILE() { return getToken(YangtuoScriptParser.WHILE, 0); }
-		public TerminalNode DO() { return getToken(YangtuoScriptParser.DO, 0); }
 		public TerminalNode SEMI() { return getToken(YangtuoScriptParser.SEMI, 0); }
-		public TerminalNode RETURN() { return getToken(YangtuoScriptParser.RETURN, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
 		}
-		public TerminalNode BREAK() { return getToken(YangtuoScriptParser.BREAK, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode CONTINUE() { return getToken(YangtuoScriptParser.CONTINUE, 0); }
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -263,393 +240,24 @@ public class YangtuoScriptParser extends Parser {
 		enterRule(_localctx, 2, RULE_statement);
 		int _la;
 		try {
-			setState(69);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case IF:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(30);
-				match(IF);
-				setState(31);
-				parExpression();
-				setState(32);
-				statement();
-				setState(35);
-				_errHandler.sync(this);
-				switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
-				case 1:
-					{
-					setState(33);
-					match(ELSE);
-					setState(34);
-					statement();
-					}
-					break;
-				}
-				}
-				break;
-			case FOR:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(37);
-				match(FOR);
-				setState(38);
-				match(LPAREN);
-				setState(39);
-				forControl();
-				setState(40);
-				match(RPAREN);
-				setState(41);
-				statement();
-				}
-				break;
-			case WHILE:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(43);
-				match(WHILE);
-				setState(44);
-				parExpression();
-				setState(45);
-				statement();
-				}
-				break;
-			case DO:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(47);
-				match(DO);
-				setState(48);
-				statement();
-				setState(49);
-				match(WHILE);
-				setState(50);
-				parExpression();
-				setState(51);
-				match(SEMI);
-				}
-				break;
-			case RETURN:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(53);
-				match(RETURN);
-				setState(55);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if (_la==THIS || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & 2305843138087880767L) != 0)) {
-					{
-					setState(54);
-					expression(0);
-					}
-				}
-
-				setState(57);
-				match(SEMI);
-				}
-				break;
-			case BREAK:
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(58);
-				match(BREAK);
-				setState(60);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if (_la==IDENTIFIER) {
-					{
-					setState(59);
-					identifier();
-					}
-				}
-
-				setState(62);
-				match(SEMI);
-				}
-				break;
-			case CONTINUE:
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(63);
-				match(CONTINUE);
-				setState(65);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if (_la==IDENTIFIER) {
-					{
-					setState(64);
-					identifier();
-					}
-				}
-
-				setState(67);
-				match(SEMI);
-				}
-				break;
-			case SEMI:
-				enterOuterAlt(_localctx, 8);
-				{
-				setState(68);
-				match(SEMI);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class ParExpressionContext extends ParserRuleContext {
-		public TerminalNode LPAREN() { return getToken(YangtuoScriptParser.LPAREN, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public TerminalNode RPAREN() { return getToken(YangtuoScriptParser.RPAREN, 0); }
-		public ParExpressionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_parExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterParExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitParExpression(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitParExpression(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ParExpressionContext parExpression() throws RecognitionException {
-		ParExpressionContext _localctx = new ParExpressionContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_parExpression);
-		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(71);
-			match(LPAREN);
-			setState(72);
-			expression(0);
-			setState(73);
-			match(RPAREN);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class ForControlContext extends ParserRuleContext {
-		public ExpressionListContext forUpdate;
-		public List<TerminalNode> SEMI() { return getTokens(YangtuoScriptParser.SEMI); }
-		public TerminalNode SEMI(int i) {
-			return getToken(YangtuoScriptParser.SEMI, i);
-		}
-		public ForInitContext forInit() {
-			return getRuleContext(ForInitContext.class,0);
-		}
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public ExpressionListContext expressionList() {
-			return getRuleContext(ExpressionListContext.class,0);
-		}
-		public ForControlContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_forControl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterForControl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitForControl(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitForControl(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ForControlContext forControl() throws RecognitionException {
-		ForControlContext _localctx = new ForControlContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_forControl);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(76);
+			setState(31);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==THIS || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & 2305843138087880767L) != 0)) {
+			while (((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & 2305843009213696015L) != 0)) {
 				{
-				setState(75);
-				forInit();
+				{
+				setState(28);
+				expression();
 				}
+				}
+				setState(33);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
 			}
-
-			setState(78);
+			setState(34);
 			match(SEMI);
-			setState(80);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			if (_la==THIS || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & 2305843138087880767L) != 0)) {
-				{
-				setState(79);
-				expression(0);
-				}
-			}
-
-			setState(82);
-			match(SEMI);
-			setState(84);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			if (_la==THIS || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & 2305843138087880767L) != 0)) {
-				{
-				setState(83);
-				((ForControlContext)_localctx).forUpdate = expressionList();
-				}
-			}
-
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class ForInitContext extends ParserRuleContext {
-		public ExpressionListContext expressionList() {
-			return getRuleContext(ExpressionListContext.class,0);
-		}
-		public ForInitContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_forInit; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterForInit(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitForInit(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitForInit(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ForInitContext forInit() throws RecognitionException {
-		ForInitContext _localctx = new ForInitContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_forInit);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(86);
-			expressionList();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class ExpressionListContext extends ParserRuleContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public List<TerminalNode> COMMA() { return getTokens(YangtuoScriptParser.COMMA); }
-		public TerminalNode COMMA(int i) {
-			return getToken(YangtuoScriptParser.COMMA, i);
-		}
-		public ExpressionListContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expressionList; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterExpressionList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitExpressionList(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitExpressionList(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ExpressionListContext expressionList() throws RecognitionException {
-		ExpressionListContext _localctx = new ExpressionListContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_expressionList);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(88);
-			expression(0);
-			setState(93);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==COMMA) {
-				{
-				{
-				setState(89);
-				match(COMMA);
-				setState(90);
-				expression(0);
-				}
-				}
-				setState(95);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -665,60 +273,18 @@ public class YangtuoScriptParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionContext extends ParserRuleContext {
-		public Token prefix;
-		public Token bop;
-		public Token postfix;
-		public PrimaryContext primary() {
-			return getRuleContext(PrimaryContext.class,0);
+		public AdditiveExpressionContext additiveExpression() {
+			return getRuleContext(AdditiveExpressionContext.class,0);
 		}
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
+		public SubtractionExpressionContext subtractionExpression() {
+			return getRuleContext(SubtractionExpressionContext.class,0);
 		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
+		public MultiplicativeExpressionContext multiplicativeExpression() {
+			return getRuleContext(MultiplicativeExpressionContext.class,0);
 		}
-		public TerminalNode ADD() { return getToken(YangtuoScriptParser.ADD, 0); }
-		public TerminalNode SUB() { return getToken(YangtuoScriptParser.SUB, 0); }
-		public TerminalNode INC() { return getToken(YangtuoScriptParser.INC, 0); }
-		public TerminalNode DEC() { return getToken(YangtuoScriptParser.DEC, 0); }
-		public TerminalNode TILDE() { return getToken(YangtuoScriptParser.TILDE, 0); }
-		public TerminalNode BANG() { return getToken(YangtuoScriptParser.BANG, 0); }
-		public TerminalNode MUL() { return getToken(YangtuoScriptParser.MUL, 0); }
-		public TerminalNode DIV() { return getToken(YangtuoScriptParser.DIV, 0); }
-		public TerminalNode MOD() { return getToken(YangtuoScriptParser.MOD, 0); }
-		public List<TerminalNode> LT() { return getTokens(YangtuoScriptParser.LT); }
-		public TerminalNode LT(int i) {
-			return getToken(YangtuoScriptParser.LT, i);
+		public DivisionExpressionContext divisionExpression() {
+			return getRuleContext(DivisionExpressionContext.class,0);
 		}
-		public List<TerminalNode> GT() { return getTokens(YangtuoScriptParser.GT); }
-		public TerminalNode GT(int i) {
-			return getToken(YangtuoScriptParser.GT, i);
-		}
-		public TerminalNode LE() { return getToken(YangtuoScriptParser.LE, 0); }
-		public TerminalNode GE() { return getToken(YangtuoScriptParser.GE, 0); }
-		public TerminalNode EQUAL() { return getToken(YangtuoScriptParser.EQUAL, 0); }
-		public TerminalNode NOTEQUAL() { return getToken(YangtuoScriptParser.NOTEQUAL, 0); }
-		public TerminalNode BITAND() { return getToken(YangtuoScriptParser.BITAND, 0); }
-		public TerminalNode CARET() { return getToken(YangtuoScriptParser.CARET, 0); }
-		public TerminalNode BITOR() { return getToken(YangtuoScriptParser.BITOR, 0); }
-		public TerminalNode AND() { return getToken(YangtuoScriptParser.AND, 0); }
-		public TerminalNode OR() { return getToken(YangtuoScriptParser.OR, 0); }
-		public TerminalNode COLON() { return getToken(YangtuoScriptParser.COLON, 0); }
-		public TerminalNode QUESTION() { return getToken(YangtuoScriptParser.QUESTION, 0); }
-		public TerminalNode ASSIGN() { return getToken(YangtuoScriptParser.ASSIGN, 0); }
-		public TerminalNode ADD_ASSIGN() { return getToken(YangtuoScriptParser.ADD_ASSIGN, 0); }
-		public TerminalNode SUB_ASSIGN() { return getToken(YangtuoScriptParser.SUB_ASSIGN, 0); }
-		public TerminalNode MUL_ASSIGN() { return getToken(YangtuoScriptParser.MUL_ASSIGN, 0); }
-		public TerminalNode DIV_ASSIGN() { return getToken(YangtuoScriptParser.DIV_ASSIGN, 0); }
-		public TerminalNode AND_ASSIGN() { return getToken(YangtuoScriptParser.AND_ASSIGN, 0); }
-		public TerminalNode OR_ASSIGN() { return getToken(YangtuoScriptParser.OR_ASSIGN, 0); }
-		public TerminalNode XOR_ASSIGN() { return getToken(YangtuoScriptParser.XOR_ASSIGN, 0); }
-		public TerminalNode RSHIFT_ASSIGN() { return getToken(YangtuoScriptParser.RSHIFT_ASSIGN, 0); }
-		public TerminalNode URSHIFT_ASSIGN() { return getToken(YangtuoScriptParser.URSHIFT_ASSIGN, 0); }
-		public TerminalNode LSHIFT_ASSIGN() { return getToken(YangtuoScriptParser.LSHIFT_ASSIGN, 0); }
-		public TerminalNode MOD_ASSIGN() { return getToken(YangtuoScriptParser.MOD_ASSIGN, 0); }
-		public TerminalNode LBRACK() { return getToken(YangtuoScriptParser.LBRACK, 0); }
-		public TerminalNode RBRACK() { return getToken(YangtuoScriptParser.RBRACK, 0); }
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -739,351 +305,445 @@ public class YangtuoScriptParser extends Parser {
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
-		return expression(0);
+		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_expression);
+		try {
+			setState(40);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(36);
+				additiveExpression(0);
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(37);
+				subtractionExpression(0);
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(38);
+				multiplicativeExpression(0);
+				}
+				break;
+			case 4:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(39);
+				divisionExpression(0);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
 	}
 
-	private ExpressionContext expression(int _p) throws RecognitionException {
+	@SuppressWarnings("CheckReturnValue")
+	public static class AdditiveExpressionContext extends ParserRuleContext {
+		public MultiplicativeExpressionContext multiplicativeExpression() {
+			return getRuleContext(MultiplicativeExpressionContext.class,0);
+		}
+		public DivisionExpressionContext divisionExpression() {
+			return getRuleContext(DivisionExpressionContext.class,0);
+		}
+		public AdditiveExpressionContext additiveExpression() {
+			return getRuleContext(AdditiveExpressionContext.class,0);
+		}
+		public TerminalNode ADD() { return getToken(YangtuoScriptParser.ADD, 0); }
+		public AdditiveExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_additiveExpression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterAdditiveExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitAdditiveExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitAdditiveExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final AdditiveExpressionContext additiveExpression() throws RecognitionException {
+		return additiveExpression(0);
+	}
+
+	private AdditiveExpressionContext additiveExpression(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
-		ExpressionContext _prevctx = _localctx;
-		int _startState = 12;
-		enterRecursionRule(_localctx, 12, RULE_expression, _p);
-		int _la;
+		AdditiveExpressionContext _localctx = new AdditiveExpressionContext(_ctx, _parentState);
+		AdditiveExpressionContext _prevctx = _localctx;
+		int _startState = 6;
+		enterRecursionRule(_localctx, 6, RULE_additiveExpression, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(102);
+			setState(45);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case THIS:
-			case DECIMAL_LITERAL:
-			case HEX_LITERAL:
-			case OCT_LITERAL:
-			case BINARY_LITERAL:
-			case FLOAT_LITERAL:
-			case HEX_FLOAT_LITERAL:
-			case LPAREN:
-			case IDENTIFIER:
+			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+			case 1:
 				{
-				setState(97);
-				primary();
+				setState(43);
+				multiplicativeExpression(0);
 				}
 				break;
-			case INC:
-			case DEC:
-			case ADD:
-			case SUB:
+			case 2:
 				{
-				setState(98);
-				((ExpressionContext)_localctx).prefix = _input.LT(1);
-				_la = _input.LA(1);
-				if ( !(((((_la - 100)) & ~0x3f) == 0 && ((1L << (_la - 100)) & 15L) != 0)) ) {
-					((ExpressionContext)_localctx).prefix = (Token)_errHandler.recoverInline(this);
-				}
-				else {
-					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-					_errHandler.reportMatch(this);
-					consume();
-				}
-				setState(99);
-				expression(14);
+				setState(44);
+				divisionExpression(0);
 				}
 				break;
-			case BANG:
-			case TILDE:
-				{
-				setState(100);
-				((ExpressionContext)_localctx).prefix = _input.LT(1);
-				_la = _input.LA(1);
-				if ( !(_la==BANG || _la==TILDE) ) {
-					((ExpressionContext)_localctx).prefix = (Token)_errHandler.recoverInline(this);
-				}
-				else {
-					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-					_errHandler.reportMatch(this);
-					consume();
-				}
-				setState(101);
-				expression(13);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(160);
+			setState(55);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(158);
+					setState(53);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(104);
-						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
-						setState(105);
-						((ExpressionContext)_localctx).bop = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(((((_la - 104)) & ~0x3f) == 0 && ((1L << (_la - 104)) & 35L) != 0)) ) {
-							((ExpressionContext)_localctx).bop = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
-						setState(106);
-						expression(13);
+						_localctx = new AdditiveExpressionContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_additiveExpression);
+						setState(47);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(48);
+						match(ADD);
+						setState(49);
+						multiplicativeExpression(0);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(107);
-						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
-						setState(108);
-						((ExpressionContext)_localctx).bop = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(_la==ADD || _la==SUB) ) {
-							((ExpressionContext)_localctx).bop = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
-						setState(109);
-						expression(12);
-						}
-						break;
-					case 3:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(110);
-						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(118);
-						_errHandler.sync(this);
-						switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
-						case 1:
-							{
-							setState(111);
-							match(LT);
-							setState(112);
-							match(LT);
-							}
-							break;
-						case 2:
-							{
-							setState(113);
-							match(GT);
-							setState(114);
-							match(GT);
-							setState(115);
-							match(GT);
-							}
-							break;
-						case 3:
-							{
-							setState(116);
-							match(GT);
-							setState(117);
-							match(GT);
-							}
-							break;
-						}
-						setState(120);
-						expression(11);
-						}
-						break;
-					case 4:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(121);
-						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(122);
-						((ExpressionContext)_localctx).bop = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(((((_la - 88)) & ~0x3f) == 0 && ((1L << (_la - 88)) & 387L) != 0)) ) {
-							((ExpressionContext)_localctx).bop = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
-						setState(123);
-						expression(10);
-						}
-						break;
-					case 5:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(124);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(125);
-						((ExpressionContext)_localctx).bop = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(_la==EQUAL || _la==NOTEQUAL) ) {
-							((ExpressionContext)_localctx).bop = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
-						setState(126);
-						expression(9);
-						}
-						break;
-					case 6:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(127);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(128);
-						((ExpressionContext)_localctx).bop = match(BITAND);
-						setState(129);
-						expression(8);
-						}
-						break;
-					case 7:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(130);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(131);
-						((ExpressionContext)_localctx).bop = match(CARET);
-						setState(132);
-						expression(7);
-						}
-						break;
-					case 8:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(133);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(134);
-						((ExpressionContext)_localctx).bop = match(BITOR);
-						setState(135);
-						expression(6);
-						}
-						break;
-					case 9:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(136);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(137);
-						((ExpressionContext)_localctx).bop = match(AND);
-						setState(138);
-						expression(5);
-						}
-						break;
-					case 10:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(139);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(140);
-						((ExpressionContext)_localctx).bop = match(OR);
-						setState(141);
-						expression(4);
-						}
-						break;
-					case 11:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(142);
-						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(143);
-						((ExpressionContext)_localctx).bop = match(QUESTION);
-						setState(144);
-						expression(0);
-						setState(145);
-						match(COLON);
-						setState(146);
-						expression(3);
-						}
-						break;
-					case 12:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(148);
+						_localctx = new AdditiveExpressionContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_additiveExpression);
+						setState(50);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-						setState(149);
-						((ExpressionContext)_localctx).bop = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(((((_la - 87)) & ~0x3f) == 0 && ((1L << (_la - 87)) & 17171480577L) != 0)) ) {
-							((ExpressionContext)_localctx).bop = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
-						setState(150);
-						expression(1);
-						}
-						break;
-					case 13:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(151);
-						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
-						setState(152);
-						match(LBRACK);
-						setState(153);
-						expression(0);
-						setState(154);
-						match(RBRACK);
-						}
-						break;
-					case 14:
-						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(156);
-						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
-						setState(157);
-						((ExpressionContext)_localctx).postfix = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(_la==INC || _la==DEC) ) {
-							((ExpressionContext)_localctx).postfix = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
+						setState(51);
+						match(ADD);
+						setState(52);
+						divisionExpression(0);
 						}
 						break;
 					}
 					} 
 				}
-				setState(162);
+				setState(57);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class SubtractionExpressionContext extends ParserRuleContext {
+		public MultiplicativeExpressionContext multiplicativeExpression() {
+			return getRuleContext(MultiplicativeExpressionContext.class,0);
+		}
+		public DivisionExpressionContext divisionExpression() {
+			return getRuleContext(DivisionExpressionContext.class,0);
+		}
+		public SubtractionExpressionContext subtractionExpression() {
+			return getRuleContext(SubtractionExpressionContext.class,0);
+		}
+		public TerminalNode SUB() { return getToken(YangtuoScriptParser.SUB, 0); }
+		public SubtractionExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_subtractionExpression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterSubtractionExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitSubtractionExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitSubtractionExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final SubtractionExpressionContext subtractionExpression() throws RecognitionException {
+		return subtractionExpression(0);
+	}
+
+	private SubtractionExpressionContext subtractionExpression(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		SubtractionExpressionContext _localctx = new SubtractionExpressionContext(_ctx, _parentState);
+		SubtractionExpressionContext _prevctx = _localctx;
+		int _startState = 8;
+		enterRecursionRule(_localctx, 8, RULE_subtractionExpression, _p);
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(61);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+			case 1:
+				{
+				setState(59);
+				multiplicativeExpression(0);
+				}
+				break;
+			case 2:
+				{
+				setState(60);
+				divisionExpression(0);
+				}
+				break;
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(71);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					setState(69);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+					case 1:
+						{
+						_localctx = new SubtractionExpressionContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_subtractionExpression);
+						setState(63);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(64);
+						match(SUB);
+						setState(65);
+						multiplicativeExpression(0);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new SubtractionExpressionContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_subtractionExpression);
+						setState(66);
+						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
+						setState(67);
+						match(SUB);
+						setState(68);
+						divisionExpression(0);
+						}
+						break;
+					}
+					} 
+				}
+				setState(73);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MultiplicativeExpressionContext extends ParserRuleContext {
+		public PrimaryContext primary() {
+			return getRuleContext(PrimaryContext.class,0);
+		}
+		public MultiplicativeExpressionContext multiplicativeExpression() {
+			return getRuleContext(MultiplicativeExpressionContext.class,0);
+		}
+		public TerminalNode MUL() { return getToken(YangtuoScriptParser.MUL, 0); }
+		public MultiplicativeExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_multiplicativeExpression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterMultiplicativeExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitMultiplicativeExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitMultiplicativeExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MultiplicativeExpressionContext multiplicativeExpression() throws RecognitionException {
+		return multiplicativeExpression(0);
+	}
+
+	private MultiplicativeExpressionContext multiplicativeExpression(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		MultiplicativeExpressionContext _localctx = new MultiplicativeExpressionContext(_ctx, _parentState);
+		MultiplicativeExpressionContext _prevctx = _localctx;
+		int _startState = 10;
+		enterRecursionRule(_localctx, 10, RULE_multiplicativeExpression, _p);
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			{
+			setState(75);
+			primary();
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(82);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					{
+					_localctx = new MultiplicativeExpressionContext(_parentctx, _parentState);
+					pushNewRecursionContext(_localctx, _startState, RULE_multiplicativeExpression);
+					setState(77);
+					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
+					setState(78);
+					match(MUL);
+					setState(79);
+					primary();
+					}
+					} 
+				}
+				setState(84);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class DivisionExpressionContext extends ParserRuleContext {
+		public PrimaryContext primary() {
+			return getRuleContext(PrimaryContext.class,0);
+		}
+		public DivisionExpressionContext divisionExpression() {
+			return getRuleContext(DivisionExpressionContext.class,0);
+		}
+		public TerminalNode DIV() { return getToken(YangtuoScriptParser.DIV, 0); }
+		public DivisionExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_divisionExpression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterDivisionExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitDivisionExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitDivisionExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final DivisionExpressionContext divisionExpression() throws RecognitionException {
+		return divisionExpression(0);
+	}
+
+	private DivisionExpressionContext divisionExpression(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		DivisionExpressionContext _localctx = new DivisionExpressionContext(_ctx, _parentState);
+		DivisionExpressionContext _prevctx = _localctx;
+		int _startState = 12;
+		enterRecursionRule(_localctx, 12, RULE_divisionExpression, _p);
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			{
+			setState(86);
+			primary();
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(93);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					{
+					_localctx = new DivisionExpressionContext(_parentctx, _parentState);
+					pushNewRecursionContext(_localctx, _startState, RULE_divisionExpression);
+					setState(88);
+					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
+					setState(89);
+					match(DIV);
+					setState(90);
+					primary();
+					}
+					} 
+				}
+				setState(95);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
 			}
 			}
 		}
@@ -1102,9 +762,6 @@ public class YangtuoScriptParser extends Parser {
 	public static class LiteralContext extends ParserRuleContext {
 		public IntegerLiteralContext integerLiteral() {
 			return getRuleContext(IntegerLiteralContext.class,0);
-		}
-		public FloatLiteralContext floatLiteral() {
-			return getRuleContext(FloatLiteralContext.class,0);
 		}
 		public LiteralContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1129,29 +786,10 @@ public class YangtuoScriptParser extends Parser {
 		LiteralContext _localctx = new LiteralContext(_ctx, getState());
 		enterRule(_localctx, 14, RULE_literal);
 		try {
-			setState(165);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case DECIMAL_LITERAL:
-			case HEX_LITERAL:
-			case OCT_LITERAL:
-			case BINARY_LITERAL:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(163);
-				integerLiteral();
-				}
-				break;
-			case FLOAT_LITERAL:
-			case HEX_FLOAT_LITERAL:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(164);
-				floatLiteral();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(96);
+			integerLiteral();
 			}
 		}
 		catch (RecognitionException re) {
@@ -1197,62 +835,9 @@ public class YangtuoScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(167);
+			setState(98);
 			_la = _input.LA(1);
 			if ( !(((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & 15L) != 0)) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class FloatLiteralContext extends ParserRuleContext {
-		public TerminalNode FLOAT_LITERAL() { return getToken(YangtuoScriptParser.FLOAT_LITERAL, 0); }
-		public TerminalNode HEX_FLOAT_LITERAL() { return getToken(YangtuoScriptParser.HEX_FLOAT_LITERAL, 0); }
-		public FloatLiteralContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_floatLiteral; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).enterFloatLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof YangtuoScriptListener ) ((YangtuoScriptListener)listener).exitFloatLiteral(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof YangtuoScriptVisitor ) return ((YangtuoScriptVisitor<? extends T>)visitor).visitFloatLiteral(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final FloatLiteralContext floatLiteral() throws RecognitionException {
-		FloatLiteralContext _localctx = new FloatLiteralContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_floatLiteral);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(169);
-			_la = _input.LA(1);
-			if ( !(_la==FLOAT_LITERAL || _la==HEX_FLOAT_LITERAL) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1297,11 +882,11 @@ public class YangtuoScriptParser extends Parser {
 
 	public final IdentifierContext identifier() throws RecognitionException {
 		IdentifierContext _localctx = new IdentifierContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_identifier);
+		enterRule(_localctx, 18, RULE_identifier);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(171);
+			setState(100);
 			match(IDENTIFIER);
 			}
 		}
@@ -1323,7 +908,6 @@ public class YangtuoScriptParser extends Parser {
 			return getRuleContext(ExpressionContext.class,0);
 		}
 		public TerminalNode RPAREN() { return getToken(YangtuoScriptParser.RPAREN, 0); }
-		public TerminalNode THIS() { return getToken(YangtuoScriptParser.THIS, 0); }
 		public LiteralContext literal() {
 			return getRuleContext(LiteralContext.class,0);
 		}
@@ -1351,45 +935,36 @@ public class YangtuoScriptParser extends Parser {
 
 	public final PrimaryContext primary() throws RecognitionException {
 		PrimaryContext _localctx = new PrimaryContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_primary);
+		enterRule(_localctx, 20, RULE_primary);
 		try {
-			setState(180);
+			setState(108);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LPAREN:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(173);
+				setState(102);
 				match(LPAREN);
-				setState(174);
-				expression(0);
-				setState(175);
+				setState(103);
+				expression();
+				setState(104);
 				match(RPAREN);
-				}
-				break;
-			case THIS:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(177);
-				match(THIS);
 				}
 				break;
 			case DECIMAL_LITERAL:
 			case HEX_LITERAL:
 			case OCT_LITERAL:
 			case BINARY_LITERAL:
-			case FLOAT_LITERAL:
-			case HEX_FLOAT_LITERAL:
-				enterOuterAlt(_localctx, 3);
+				enterOuterAlt(_localctx, 2);
 				{
-				setState(178);
+				setState(106);
 				literal();
 				}
 				break;
 			case IDENTIFIER:
-				enterOuterAlt(_localctx, 4);
+				enterOuterAlt(_localctx, 3);
 				{
-				setState(179);
+				setState(107);
 				identifier();
 				}
 				break;
@@ -1410,163 +985,113 @@ public class YangtuoScriptParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
+		case 3:
+			return additiveExpression_sempred((AdditiveExpressionContext)_localctx, predIndex);
+		case 4:
+			return subtractionExpression_sempred((SubtractionExpressionContext)_localctx, predIndex);
+		case 5:
+			return multiplicativeExpression_sempred((MultiplicativeExpressionContext)_localctx, predIndex);
 		case 6:
-			return expression_sempred((ExpressionContext)_localctx, predIndex);
+			return divisionExpression_sempred((DivisionExpressionContext)_localctx, predIndex);
 		}
 		return true;
 	}
-	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
+	private boolean additiveExpression_sempred(AdditiveExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 12);
-		case 1:
-			return precpred(_ctx, 11);
-		case 2:
-			return precpred(_ctx, 10);
-		case 3:
-			return precpred(_ctx, 9);
-		case 4:
-			return precpred(_ctx, 8);
-		case 5:
-			return precpred(_ctx, 7);
-		case 6:
-			return precpred(_ctx, 6);
-		case 7:
-			return precpred(_ctx, 5);
-		case 8:
-			return precpred(_ctx, 4);
-		case 9:
-			return precpred(_ctx, 3);
-		case 10:
 			return precpred(_ctx, 2);
-		case 11:
+		case 1:
 			return precpred(_ctx, 1);
-		case 12:
-			return precpred(_ctx, 16);
-		case 13:
-			return precpred(_ctx, 15);
+		}
+		return true;
+	}
+	private boolean subtractionExpression_sempred(SubtractionExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 2:
+			return precpred(_ctx, 2);
+		case 3:
+			return precpred(_ctx, 1);
+		}
+		return true;
+	}
+	private boolean multiplicativeExpression_sempred(MultiplicativeExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 4:
+			return precpred(_ctx, 1);
+		}
+		return true;
+	}
+	private boolean divisionExpression_sempred(DivisionExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 5:
+			return precpred(_ctx, 1);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0080\u00b7\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
-		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004"+
-		"\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007"+
-		"\u0002\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b"+
-		"\u0001\u0000\u0005\u0000\u001a\b\u0000\n\u0000\f\u0000\u001d\t\u0000\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001$\b"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0003\u00018\b\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0003"+
-		"\u0001=\b\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0003\u0001B\b\u0001"+
-		"\u0001\u0001\u0001\u0001\u0003\u0001F\b\u0001\u0001\u0002\u0001\u0002"+
-		"\u0001\u0002\u0001\u0002\u0001\u0003\u0003\u0003M\b\u0003\u0001\u0003"+
-		"\u0001\u0003\u0003\u0003Q\b\u0003\u0001\u0003\u0001\u0003\u0003\u0003"+
-		"U\b\u0003\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0005\u0005\\\b\u0005\n\u0005\f\u0005_\t\u0005\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0003\u0006g\b\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0003\u0006w\b\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0005\u0006\u009f\b\u0006\n\u0006\f\u0006\u00a2\t\u0006\u0001\u0007\u0001"+
-		"\u0007\u0003\u0007\u00a6\b\u0007\u0001\b\u0001\b\u0001\t\u0001\t\u0001"+
-		"\n\u0001\n\u0001\u000b\u0001\u000b\u0001\u000b\u0001\u000b\u0001\u000b"+
-		"\u0001\u000b\u0001\u000b\u0003\u000b\u00b5\b\u000b\u0001\u000b\u0000\u0001"+
-		"\f\f\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0000"+
-		"\n\u0001\u0000dg\u0001\u0000Z[\u0002\u0000himm\u0001\u0000fg\u0002\u0000"+
-		"XY_`\u0002\u0000^^aa\u0002\u0000WWnx\u0001\u0000de\u0001\u0000CF\u0001"+
-		"\u0000GH\u00d0\u0000\u001b\u0001\u0000\u0000\u0000\u0002E\u0001\u0000"+
-		"\u0000\u0000\u0004G\u0001\u0000\u0000\u0000\u0006L\u0001\u0000\u0000\u0000"+
-		"\bV\u0001\u0000\u0000\u0000\nX\u0001\u0000\u0000\u0000\ff\u0001\u0000"+
-		"\u0000\u0000\u000e\u00a5\u0001\u0000\u0000\u0000\u0010\u00a7\u0001\u0000"+
-		"\u0000\u0000\u0012\u00a9\u0001\u0000\u0000\u0000\u0014\u00ab\u0001\u0000"+
-		"\u0000\u0000\u0016\u00b4\u0001\u0000\u0000\u0000\u0018\u001a\u0003\u0002"+
-		"\u0001\u0000\u0019\u0018\u0001\u0000\u0000\u0000\u001a\u001d\u0001\u0000"+
-		"\u0000\u0000\u001b\u0019\u0001\u0000\u0000\u0000\u001b\u001c\u0001\u0000"+
-		"\u0000\u0000\u001c\u0001\u0001\u0000\u0000\u0000\u001d\u001b\u0001\u0000"+
-		"\u0000\u0000\u001e\u001f\u0005\u0016\u0000\u0000\u001f \u0003\u0004\u0002"+
-		"\u0000 #\u0003\u0002\u0001\u0000!\"\u0005\u000f\u0000\u0000\"$\u0003\u0002"+
-		"\u0001\u0000#!\u0001\u0000\u0000\u0000#$\u0001\u0000\u0000\u0000$F\u0001"+
-		"\u0000\u0000\u0000%&\u0005\u0015\u0000\u0000&\'\u0005N\u0000\u0000\'("+
-		"\u0003\u0006\u0003\u0000()\u0005O\u0000\u0000)*\u0003\u0002\u0001\u0000"+
-		"*F\u0001\u0000\u0000\u0000+,\u00052\u0000\u0000,-\u0003\u0004\u0002\u0000"+
-		"-.\u0003\u0002\u0001\u0000.F\u0001\u0000\u0000\u0000/0\u0005\r\u0000\u0000"+
-		"01\u0003\u0002\u0001\u000012\u00052\u0000\u000023\u0003\u0004\u0002\u0000"+
-		"34\u0005T\u0000\u00004F\u0001\u0000\u0000\u000057\u0005$\u0000\u00006"+
-		"8\u0003\f\u0006\u000076\u0001\u0000\u0000\u000078\u0001\u0000\u0000\u0000"+
-		"89\u0001\u0000\u0000\u00009F\u0005T\u0000\u0000:<\u0005\u0004\u0000\u0000"+
-		";=\u0003\u0014\n\u0000<;\u0001\u0000\u0000\u0000<=\u0001\u0000\u0000\u0000"+
-		"=>\u0001\u0000\u0000\u0000>F\u0005T\u0000\u0000?A\u0005\u000b\u0000\u0000"+
-		"@B\u0003\u0014\n\u0000A@\u0001\u0000\u0000\u0000AB\u0001\u0000\u0000\u0000"+
-		"BC\u0001\u0000\u0000\u0000CF\u0005T\u0000\u0000DF\u0005T\u0000\u0000E"+
-		"\u001e\u0001\u0000\u0000\u0000E%\u0001\u0000\u0000\u0000E+\u0001\u0000"+
-		"\u0000\u0000E/\u0001\u0000\u0000\u0000E5\u0001\u0000\u0000\u0000E:\u0001"+
-		"\u0000\u0000\u0000E?\u0001\u0000\u0000\u0000ED\u0001\u0000\u0000\u0000"+
-		"F\u0003\u0001\u0000\u0000\u0000GH\u0005N\u0000\u0000HI\u0003\f\u0006\u0000"+
-		"IJ\u0005O\u0000\u0000J\u0005\u0001\u0000\u0000\u0000KM\u0003\b\u0004\u0000"+
-		"LK\u0001\u0000\u0000\u0000LM\u0001\u0000\u0000\u0000MN\u0001\u0000\u0000"+
-		"\u0000NP\u0005T\u0000\u0000OQ\u0003\f\u0006\u0000PO\u0001\u0000\u0000"+
-		"\u0000PQ\u0001\u0000\u0000\u0000QR\u0001\u0000\u0000\u0000RT\u0005T\u0000"+
-		"\u0000SU\u0003\n\u0005\u0000TS\u0001\u0000\u0000\u0000TU\u0001\u0000\u0000"+
-		"\u0000U\u0007\u0001\u0000\u0000\u0000VW\u0003\n\u0005\u0000W\t\u0001\u0000"+
-		"\u0000\u0000X]\u0003\f\u0006\u0000YZ\u0005U\u0000\u0000Z\\\u0003\f\u0006"+
-		"\u0000[Y\u0001\u0000\u0000\u0000\\_\u0001\u0000\u0000\u0000][\u0001\u0000"+
-		"\u0000\u0000]^\u0001\u0000\u0000\u0000^\u000b\u0001\u0000\u0000\u0000"+
-		"_]\u0001\u0000\u0000\u0000`a\u0006\u0006\uffff\uffff\u0000ag\u0003\u0016"+
-		"\u000b\u0000bc\u0007\u0000\u0000\u0000cg\u0003\f\u0006\u000ede\u0007\u0001"+
-		"\u0000\u0000eg\u0003\f\u0006\rf`\u0001\u0000\u0000\u0000fb\u0001\u0000"+
-		"\u0000\u0000fd\u0001\u0000\u0000\u0000g\u00a0\u0001\u0000\u0000\u0000"+
-		"hi\n\f\u0000\u0000ij\u0007\u0002\u0000\u0000j\u009f\u0003\f\u0006\rkl"+
-		"\n\u000b\u0000\u0000lm\u0007\u0003\u0000\u0000m\u009f\u0003\f\u0006\f"+
-		"nv\n\n\u0000\u0000op\u0005Y\u0000\u0000pw\u0005Y\u0000\u0000qr\u0005X"+
-		"\u0000\u0000rs\u0005X\u0000\u0000sw\u0005X\u0000\u0000tu\u0005X\u0000"+
-		"\u0000uw\u0005X\u0000\u0000vo\u0001\u0000\u0000\u0000vq\u0001\u0000\u0000"+
-		"\u0000vt\u0001\u0000\u0000\u0000wx\u0001\u0000\u0000\u0000x\u009f\u0003"+
-		"\f\u0006\u000byz\n\t\u0000\u0000z{\u0007\u0004\u0000\u0000{\u009f\u0003"+
-		"\f\u0006\n|}\n\b\u0000\u0000}~\u0007\u0005\u0000\u0000~\u009f\u0003\f"+
-		"\u0006\t\u007f\u0080\n\u0007\u0000\u0000\u0080\u0081\u0005j\u0000\u0000"+
-		"\u0081\u009f\u0003\f\u0006\b\u0082\u0083\n\u0006\u0000\u0000\u0083\u0084"+
-		"\u0005l\u0000\u0000\u0084\u009f\u0003\f\u0006\u0007\u0085\u0086\n\u0005"+
-		"\u0000\u0000\u0086\u0087\u0005k\u0000\u0000\u0087\u009f\u0003\f\u0006"+
-		"\u0006\u0088\u0089\n\u0004\u0000\u0000\u0089\u008a\u0005b\u0000\u0000"+
-		"\u008a\u009f\u0003\f\u0006\u0005\u008b\u008c\n\u0003\u0000\u0000\u008c"+
-		"\u008d\u0005c\u0000\u0000\u008d\u009f\u0003\f\u0006\u0004\u008e\u008f"+
-		"\n\u0002\u0000\u0000\u008f\u0090\u0005\\\u0000\u0000\u0090\u0091\u0003"+
-		"\f\u0006\u0000\u0091\u0092\u0005]\u0000\u0000\u0092\u0093\u0003\f\u0006"+
-		"\u0003\u0093\u009f\u0001\u0000\u0000\u0000\u0094\u0095\n\u0001\u0000\u0000"+
-		"\u0095\u0096\u0007\u0006\u0000\u0000\u0096\u009f\u0003\f\u0006\u0001\u0097"+
-		"\u0098\n\u0010\u0000\u0000\u0098\u0099\u0005R\u0000\u0000\u0099\u009a"+
-		"\u0003\f\u0006\u0000\u009a\u009b\u0005S\u0000\u0000\u009b\u009f\u0001"+
-		"\u0000\u0000\u0000\u009c\u009d\n\u000f\u0000\u0000\u009d\u009f\u0007\u0007"+
-		"\u0000\u0000\u009eh\u0001\u0000\u0000\u0000\u009ek\u0001\u0000\u0000\u0000"+
-		"\u009en\u0001\u0000\u0000\u0000\u009ey\u0001\u0000\u0000\u0000\u009e|"+
-		"\u0001\u0000\u0000\u0000\u009e\u007f\u0001\u0000\u0000\u0000\u009e\u0082"+
-		"\u0001\u0000\u0000\u0000\u009e\u0085\u0001\u0000\u0000\u0000\u009e\u0088"+
-		"\u0001\u0000\u0000\u0000\u009e\u008b\u0001\u0000\u0000\u0000\u009e\u008e"+
-		"\u0001\u0000\u0000\u0000\u009e\u0094\u0001\u0000\u0000\u0000\u009e\u0097"+
-		"\u0001\u0000\u0000\u0000\u009e\u009c\u0001\u0000\u0000\u0000\u009f\u00a2"+
-		"\u0001\u0000\u0000\u0000\u00a0\u009e\u0001\u0000\u0000\u0000\u00a0\u00a1"+
-		"\u0001\u0000\u0000\u0000\u00a1\r\u0001\u0000\u0000\u0000\u00a2\u00a0\u0001"+
-		"\u0000\u0000\u0000\u00a3\u00a6\u0003\u0010\b\u0000\u00a4\u00a6\u0003\u0012"+
-		"\t\u0000\u00a5\u00a3\u0001\u0000\u0000\u0000\u00a5\u00a4\u0001\u0000\u0000"+
-		"\u0000\u00a6\u000f\u0001\u0000\u0000\u0000\u00a7\u00a8\u0007\b\u0000\u0000"+
-		"\u00a8\u0011\u0001\u0000\u0000\u0000\u00a9\u00aa\u0007\t\u0000\u0000\u00aa"+
-		"\u0013\u0001\u0000\u0000\u0000\u00ab\u00ac\u0005\u0080\u0000\u0000\u00ac"+
-		"\u0015\u0001\u0000\u0000\u0000\u00ad\u00ae\u0005N\u0000\u0000\u00ae\u00af"+
-		"\u0003\f\u0006\u0000\u00af\u00b0\u0005O\u0000\u0000\u00b0\u00b5\u0001"+
-		"\u0000\u0000\u0000\u00b1\u00b5\u0005+\u0000\u0000\u00b2\u00b5\u0003\u000e"+
-		"\u0007\u0000\u00b3\u00b5\u0003\u0014\n\u0000\u00b4\u00ad\u0001\u0000\u0000"+
-		"\u0000\u00b4\u00b1\u0001\u0000\u0000\u0000\u00b4\u00b2\u0001\u0000\u0000"+
-		"\u0000\u00b4\u00b3\u0001\u0000\u0000\u0000\u00b5\u0017\u0001\u0000\u0000"+
-		"\u0000\u0010\u001b#7<AELPT]fv\u009e\u00a0\u00a5\u00b4";
+		"\u0004\u0001\u0080o\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
+		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
+		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0001\u0000\u0005\u0000\u0018"+
+		"\b\u0000\n\u0000\f\u0000\u001b\t\u0000\u0001\u0001\u0005\u0001\u001e\b"+
+		"\u0001\n\u0001\f\u0001!\t\u0001\u0001\u0001\u0001\u0001\u0001\u0002\u0001"+
+		"\u0002\u0001\u0002\u0001\u0002\u0003\u0002)\b\u0002\u0001\u0003\u0001"+
+		"\u0003\u0001\u0003\u0003\u0003.\b\u0003\u0001\u0003\u0001\u0003\u0001"+
+		"\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0005\u00036\b\u0003\n\u0003"+
+		"\f\u00039\t\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0003\u0004>\b\u0004"+
+		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004"+
+		"\u0005\u0004F\b\u0004\n\u0004\f\u0004I\t\u0004\u0001\u0005\u0001\u0005"+
+		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0005\u0005Q\b\u0005"+
+		"\n\u0005\f\u0005T\t\u0005\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
+		"\u0001\u0006\u0001\u0006\u0005\u0006\\\b\u0006\n\u0006\f\u0006_\t\u0006"+
+		"\u0001\u0007\u0001\u0007\u0001\b\u0001\b\u0001\t\u0001\t\u0001\n\u0001"+
+		"\n\u0001\n\u0001\n\u0001\n\u0001\n\u0003\nm\b\n\u0001\n\u0000\u0004\u0006"+
+		"\b\n\f\u000b\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0000"+
+		"\u0001\u0001\u0000CFr\u0000\u0019\u0001\u0000\u0000\u0000\u0002\u001f"+
+		"\u0001\u0000\u0000\u0000\u0004(\u0001\u0000\u0000\u0000\u0006-\u0001\u0000"+
+		"\u0000\u0000\b=\u0001\u0000\u0000\u0000\nJ\u0001\u0000\u0000\u0000\fU"+
+		"\u0001\u0000\u0000\u0000\u000e`\u0001\u0000\u0000\u0000\u0010b\u0001\u0000"+
+		"\u0000\u0000\u0012d\u0001\u0000\u0000\u0000\u0014l\u0001\u0000\u0000\u0000"+
+		"\u0016\u0018\u0003\u0002\u0001\u0000\u0017\u0016\u0001\u0000\u0000\u0000"+
+		"\u0018\u001b\u0001\u0000\u0000\u0000\u0019\u0017\u0001\u0000\u0000\u0000"+
+		"\u0019\u001a\u0001\u0000\u0000\u0000\u001a\u0001\u0001\u0000\u0000\u0000"+
+		"\u001b\u0019\u0001\u0000\u0000\u0000\u001c\u001e\u0003\u0004\u0002\u0000"+
+		"\u001d\u001c\u0001\u0000\u0000\u0000\u001e!\u0001\u0000\u0000\u0000\u001f"+
+		"\u001d\u0001\u0000\u0000\u0000\u001f \u0001\u0000\u0000\u0000 \"\u0001"+
+		"\u0000\u0000\u0000!\u001f\u0001\u0000\u0000\u0000\"#\u0005T\u0000\u0000"+
+		"#\u0003\u0001\u0000\u0000\u0000$)\u0003\u0006\u0003\u0000%)\u0003\b\u0004"+
+		"\u0000&)\u0003\n\u0005\u0000\')\u0003\f\u0006\u0000($\u0001\u0000\u0000"+
+		"\u0000(%\u0001\u0000\u0000\u0000(&\u0001\u0000\u0000\u0000(\'\u0001\u0000"+
+		"\u0000\u0000)\u0005\u0001\u0000\u0000\u0000*+\u0006\u0003\uffff\uffff"+
+		"\u0000+.\u0003\n\u0005\u0000,.\u0003\f\u0006\u0000-*\u0001\u0000\u0000"+
+		"\u0000-,\u0001\u0000\u0000\u0000.7\u0001\u0000\u0000\u0000/0\n\u0002\u0000"+
+		"\u000001\u0005f\u0000\u000016\u0003\n\u0005\u000023\n\u0001\u0000\u0000"+
+		"34\u0005f\u0000\u000046\u0003\f\u0006\u00005/\u0001\u0000\u0000\u0000"+
+		"52\u0001\u0000\u0000\u000069\u0001\u0000\u0000\u000075\u0001\u0000\u0000"+
+		"\u000078\u0001\u0000\u0000\u00008\u0007\u0001\u0000\u0000\u000097\u0001"+
+		"\u0000\u0000\u0000:;\u0006\u0004\uffff\uffff\u0000;>\u0003\n\u0005\u0000"+
+		"<>\u0003\f\u0006\u0000=:\u0001\u0000\u0000\u0000=<\u0001\u0000\u0000\u0000"+
+		">G\u0001\u0000\u0000\u0000?@\n\u0002\u0000\u0000@A\u0005g\u0000\u0000"+
+		"AF\u0003\n\u0005\u0000BC\n\u0001\u0000\u0000CD\u0005g\u0000\u0000DF\u0003"+
+		"\f\u0006\u0000E?\u0001\u0000\u0000\u0000EB\u0001\u0000\u0000\u0000FI\u0001"+
+		"\u0000\u0000\u0000GE\u0001\u0000\u0000\u0000GH\u0001\u0000\u0000\u0000"+
+		"H\t\u0001\u0000\u0000\u0000IG\u0001\u0000\u0000\u0000JK\u0006\u0005\uffff"+
+		"\uffff\u0000KL\u0003\u0014\n\u0000LR\u0001\u0000\u0000\u0000MN\n\u0001"+
+		"\u0000\u0000NO\u0005h\u0000\u0000OQ\u0003\u0014\n\u0000PM\u0001\u0000"+
+		"\u0000\u0000QT\u0001\u0000\u0000\u0000RP\u0001\u0000\u0000\u0000RS\u0001"+
+		"\u0000\u0000\u0000S\u000b\u0001\u0000\u0000\u0000TR\u0001\u0000\u0000"+
+		"\u0000UV\u0006\u0006\uffff\uffff\u0000VW\u0003\u0014\n\u0000W]\u0001\u0000"+
+		"\u0000\u0000XY\n\u0001\u0000\u0000YZ\u0005i\u0000\u0000Z\\\u0003\u0014"+
+		"\n\u0000[X\u0001\u0000\u0000\u0000\\_\u0001\u0000\u0000\u0000][\u0001"+
+		"\u0000\u0000\u0000]^\u0001\u0000\u0000\u0000^\r\u0001\u0000\u0000\u0000"+
+		"_]\u0001\u0000\u0000\u0000`a\u0003\u0010\b\u0000a\u000f\u0001\u0000\u0000"+
+		"\u0000bc\u0007\u0000\u0000\u0000c\u0011\u0001\u0000\u0000\u0000de\u0005"+
+		"\u0080\u0000\u0000e\u0013\u0001\u0000\u0000\u0000fg\u0005N\u0000\u0000"+
+		"gh\u0003\u0004\u0002\u0000hi\u0005O\u0000\u0000im\u0001\u0000\u0000\u0000"+
+		"jm\u0003\u000e\u0007\u0000km\u0003\u0012\t\u0000lf\u0001\u0000\u0000\u0000"+
+		"lj\u0001\u0000\u0000\u0000lk\u0001\u0000\u0000\u0000m\u0015\u0001\u0000"+
+		"\u0000\u0000\f\u0019\u001f(-57=EGR]l";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

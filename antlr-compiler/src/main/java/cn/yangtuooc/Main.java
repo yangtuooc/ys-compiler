@@ -11,8 +11,7 @@ public class Main {
 
   public static void main(String[] args) {
     String script = """
-        int age = 45;
-        age = age + 5;
+        3*2+5       
         """;
     // 词法分析
     YangtuoScriptLexer scriptLexer = new YangtuoScriptLexer(CharStreams.fromString(script));
@@ -22,7 +21,7 @@ public class Main {
     YangtuoScriptParser scriptParser = new YangtuoScriptParser(tokenStream);
     YangtuoScriptParser.ExpressionContext expression = scriptParser.expression();
     scriptParser.dumpDFA();
-
+    System.out.println(expression.toStringTree(scriptParser));
     // 解释执行
     YangtuoScriptEvaluator scriptEvaluator = new YangtuoScriptEvaluator();
     Object result = scriptEvaluator.visit(expression);

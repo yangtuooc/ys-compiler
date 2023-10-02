@@ -23,35 +23,35 @@ public interface YangtuoScriptVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(YangtuoScriptParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link YangtuoScriptParser#parExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParExpression(YangtuoScriptParser.ParExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link YangtuoScriptParser#forControl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitForControl(YangtuoScriptParser.ForControlContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link YangtuoScriptParser#forInit}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitForInit(YangtuoScriptParser.ForInitContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link YangtuoScriptParser#expressionList}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpressionList(YangtuoScriptParser.ExpressionListContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link YangtuoScriptParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExpression(YangtuoScriptParser.ExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link YangtuoScriptParser#additiveExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAdditiveExpression(YangtuoScriptParser.AdditiveExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link YangtuoScriptParser#subtractionExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubtractionExpression(YangtuoScriptParser.SubtractionExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link YangtuoScriptParser#multiplicativeExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiplicativeExpression(YangtuoScriptParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link YangtuoScriptParser#divisionExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDivisionExpression(YangtuoScriptParser.DivisionExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link YangtuoScriptParser#literal}.
 	 * @param ctx the parse tree
@@ -64,12 +64,6 @@ public interface YangtuoScriptVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIntegerLiteral(YangtuoScriptParser.IntegerLiteralContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link YangtuoScriptParser#floatLiteral}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFloatLiteral(YangtuoScriptParser.FloatLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link YangtuoScriptParser#identifier}.
 	 * @param ctx the parse tree
