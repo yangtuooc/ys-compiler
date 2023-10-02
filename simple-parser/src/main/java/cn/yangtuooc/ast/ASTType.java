@@ -22,6 +22,9 @@ public enum ASTType {
       case INT_LITERAL -> {
         return "INT_LITERAL";
       }
+      case ASSIGNMENT -> {
+        return "ASSIGNMENT";
+      }
       default -> {
         return "UNKNOWN";
       }
