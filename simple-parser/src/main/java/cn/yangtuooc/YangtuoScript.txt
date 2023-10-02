@@ -21,7 +21,7 @@ assign
 
 additive
   : multiplicative
-  | additive plus additive
+  | additive plus multiplicative
 
 additive
   : multiplicative R
@@ -41,7 +41,7 @@ NUMBER : [0-9]+ ;
 
 multiplicative
   : primary
-  | multiplicative star multiplicative
+  | multiplicative star primary
 
 primary
   : Id

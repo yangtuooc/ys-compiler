@@ -1,9 +1,9 @@
 package cn.yangtuooc;
 
-import cn.yangtuooc.g4.evaluator.SimpleScriptEvaluator;
-import cn.yangtuooc.g4.gen.YangtuoScriptLexer;
-import cn.yangtuooc.g4.gen.YangtuoScriptParser;
-import cn.yangtuooc.g4.gen.YangtuoScriptParser.ExpressionContext;
+
+import cn.yangtuooc.antlr.YangtuoScriptLexer;
+import cn.yangtuooc.antlr.YangtuoScriptParser;
+import cn.yangtuooc.evaluator.YangtuoScriptEvaluator;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -20,12 +20,12 @@ public class Main {
 
     // 语法分析
     YangtuoScriptParser scriptParser = new YangtuoScriptParser(tokenStream);
-    ExpressionContext expression = scriptParser.expression();
+    YangtuoScriptParser.ExpressionContext expression = scriptParser.expression();
     scriptParser.dumpDFA();
 
     // 解释执行
-    SimpleScriptEvaluator scriptEvaluator = new SimpleScriptEvaluator();
-    Integer result = scriptEvaluator.visit(expression);
-    System.out.println(result);
+    YangtuoScriptEvaluator scriptEvaluator = new YangtuoScriptEvaluator();
+    Object result = scriptEvaluator.visit(expression);
+    System.out.println("result: " + result);
   }
 }
