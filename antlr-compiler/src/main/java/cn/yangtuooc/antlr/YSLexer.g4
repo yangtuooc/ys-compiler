@@ -29,7 +29,7 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-lexer grammar YangtuoScriptLexer;
+lexer grammar YSLexer;
 
 // Keywords
 

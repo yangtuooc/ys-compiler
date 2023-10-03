@@ -1,7 +1,6 @@
 package cn.yangtuooc.evaluator;
 
 import cn.yangtuooc.antlr.YangtuoScriptBaseVisitor;
-import cn.yangtuooc.antlr.YangtuoScriptParser.ExpressionContext;
 
 public class YangtuoScriptEvaluator extends YangtuoScriptBaseVisitor<Object> {
 

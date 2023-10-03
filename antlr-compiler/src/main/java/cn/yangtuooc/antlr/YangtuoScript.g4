@@ -29,9 +29,9 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-parser grammar YangtuoScript;
+grammar YangtuoScript;
 
-options { tokenVocab=YangtuoScriptLexer; }
+import YSLexer;
 
 compilationUnit
     : packageDeclaration? (importDeclaration | ';')* (typeDeclaration | ';')*
